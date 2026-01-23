@@ -9,6 +9,8 @@ import MissionVisionSection from '@/app/components/MissionVisionSection';
 import ServicesSection from '@/app/components/ServicesSection';
 import PassengerServicesSection from '@/app/components/PassengerServicesSection';
 import CateringSection from '@/app/components/CateringSection';
+import GroundHandlingSection from '@/app/components/GroundHandlingSection';
+import FuelServicesSection from '@/app/components/FuelServicesSection';
 
 export default function Home() {
   const { t, locale } = useTranslation();
@@ -49,6 +51,8 @@ export default function Home() {
         <ServicesSection />
         <PassengerServicesSection />
         <CateringSection />
+        <GroundHandlingSection />
+        <FuelServicesSection />
       </ErrorBoundary>
     </main>
   );

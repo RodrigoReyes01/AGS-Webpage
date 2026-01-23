@@ -60,6 +60,16 @@
       "titlePart2": "CATERING",
       "description": "Proporcionamos una amplia gama de opciones de catering de alta calidad, desde comidas gourmet hasta bocadillos simples, asegurando experiencias gastronómicas excepcionales en vuelo. También coordinamos el transporte terrestre eficiente para la tripulación, asegurando movimientos oportunos hacia y desde el aeropuerto."
     },
+    "groundHandling": {
+      "titlePart1": "MANEJO",
+      "titlePart2": "TERRESTRE",
+      "description": "Ofrecemos servicios completos de soporte operacional, incluyendo lavatorio, limpieza, eliminación, señalización, remolque, estacionamiento, coordinación de slots y hangares, y servicio de equipo de soporte terrestre. Manejamos todos los detalles para un vuelo sin problemas."
+    },
+    "fuel": {
+      "titlePart1": "SERVICIOS DE",
+      "titlePart2": "COMBUSTIBLE",
+      "description": "Colaboramos con los mejores corredores y proveedores de combustible para precios convenientes, financiamiento flexible y coordinación sin problemas, ofreciendo servicios de reabastecimiento rentables y sin complicaciones adaptados a sus necesidades."
+    },
     "readMore": "Leer Más"
   }
 }

@@ -60,6 +60,16 @@
       "titlePart2": "COORDINATION",
       "description": "We provide a wide range of high-quality catering options, from gourmet meals to simple snacks, ensuring exceptional in-flight dining experiences. We also coordinate efficient ground transport for crew, ensuring timely movements to and from the airport."
     },
+    "groundHandling": {
+      "titlePart1": "GROUND",
+      "titlePart2": "HANDLING",
+      "description": "We offer complete operational support services, including lavatory, cleaning, disposal, marshaling, towing, parking, slot and hangar coordination, and ground support equipment service. We handle all details for a smooth flight."
+    },
+    "fuel": {
+      "titlePart1": "FUEL",
+      "titlePart2": "SERVICES",
+      "description": "We collaborate with top brokers and fuel providers for convenient pricing, flexible financing, and seamless coordination, offering cost-effective and hassle-free fueling services tailored to your needs."
+    },
     "readMore": "Read More"
   }
 }
