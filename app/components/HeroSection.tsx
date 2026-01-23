@@ -40,6 +40,32 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   },
   backgroundImage = '/images/hero.png',
 }) => {
+  const [isButtonVisible, setIsButtonVisible] = React.useState(true);
+  const [lastScrollY, setLastScrollY] = React.useState(0);
+
+  // Handle scroll to show/hide button
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show button when scrolling up or at the top
+      if (currentScrollY < lastScrollY || currentScrollY < 10) {
+        setIsButtonVisible(true);
+      } 
+      // Hide button when scrolling down (after 100px)
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsButtonVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   // WhatsApp contact handler
   const handleWhatsAppClick = () => {
     // Format: +502 4100 2147 -> 50241002147 (remove spaces and keep country code)
@@ -125,7 +151,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* CTA Button - Requirements 3.4, 4.2 - Positioned bottom-right on tablet/desktop, hidden on mobile */}
-      <div className="hidden md:block absolute bottom-8 right-8 lg:bottom-12 lg:right-12 z-10">
+      <div className={`hidden md:block fixed bottom-8 right-8 lg:bottom-12 lg:right-12 z-50 transition-all duration-300 ease-in-out ${
+        isButtonVisible ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
+      }`}>
         <Button 
           variant="glass" 
           size="lg"
