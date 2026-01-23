@@ -40,6 +40,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   },
   backgroundImage = '/images/hero.png',
 }) => {
+  // WhatsApp contact handler
+  const handleWhatsAppClick = () => {
+    // Format: +502 4100 2147 -> 50241002147 (remove spaces and keep country code)
+    const phoneNumber = '50241002147';
+    
+    // Contextual message based on locale
+    const messages = {
+      en: 'Hello! I would like to know more about your services.',
+      es: '¡Hola! Me gustaría saber más sobre sus servicios.',
+    };
+    
+    const message = encodeURIComponent(messages[locale as keyof typeof messages] || messages.en);
+    
+    // WhatsApp URL - will open app if installed, otherwise web.whatsapp.com
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    // Open in new tab
+    window.open(whatsappUrl, '_blank');
+  };
+
   // Split the main heading to style "GROUND" separately
   const renderMainHeading = () => {
     const heading = translations.mainHeading || 'AVIATION GROUND SOLUTIONS';
@@ -95,12 +115,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         {/* CTA Button - Requirements 3.4, 4.2 - Centered on mobile, hidden on tablet/desktop */}
         <div className="md:hidden">
           <Button 
-            variant="primary" 
+            variant="glass" 
             size="lg"
-            onClick={() => {
-              // TODO: Implement chat/contact functionality
-              console.log('Let\'s Chat button clicked');
-            }}
+            onClick={handleWhatsAppClick}
           >
             {translations.ctaButton || "Let's Chat!"}
           </Button>
@@ -110,12 +127,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       {/* CTA Button - Requirements 3.4, 4.2 - Positioned bottom-right on tablet/desktop, hidden on mobile */}
       <div className="hidden md:block absolute bottom-8 right-8 lg:bottom-12 lg:right-12 z-10">
         <Button 
-          variant="primary" 
+          variant="glass" 
           size="lg"
-          onClick={() => {
-            // TODO: Implement chat/contact functionality
-            console.log('Let\'s Chat button clicked');
-          }}
+          onClick={handleWhatsAppClick}
         >
           {translations.ctaButton || "Let's Chat!"}
         </Button>

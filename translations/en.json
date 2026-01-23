@@ -9,5 +9,23 @@
     "groundWord": "GROUND",
     "subheading": "Your premier FBO ground service from Belize to Panama",
     "ctaButton": "Let's Chat!"
+  },
+  "features": {
+    "coverage": {
+      "title": "Coverage",
+      "description": "24/7 support ensuring you're never without assistance."
+    },
+    "operations": {
+      "title": "Operations",
+      "description": "Streamlined processes for seamless operations."
+    },
+    "experience": {
+      "title": "Proven Experience",
+      "description": "Decades of experience in the aviation industry."
+    },
+    "support": {
+      "title": "Personalized Support",
+      "description": "Tailored assistance to meet your specific needs."
+    }
   }
 }

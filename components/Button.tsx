@@ -3,7 +3,7 @@
 import React from 'react';
 
 export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'glass';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   onClick?: () => void;
@@ -29,6 +29,7 @@ const Button: React.FC<ButtonProps> = ({
     primary: 'bg-brand-blue text-white hover:bg-blue-700 active:bg-blue-800 focus:ring-brand-blue hover:shadow-lg hover:scale-105',
     secondary: 'bg-white text-brand-blue border-2 border-brand-blue hover:bg-brand-blue hover:text-white active:bg-blue-700 focus:ring-brand-blue hover:shadow-lg hover:scale-105',
     outline: 'bg-transparent text-brand-blue border-2 border-brand-blue hover:bg-brand-blue hover:text-white active:bg-blue-700 focus:ring-brand-blue hover:shadow-lg hover:scale-105',
+    glass: 'bg-white/10 backdrop-blur-2xl text-white border-2 border-white/40 hover:bg-white/20 hover:border-white/60 active:bg-white/30 focus:ring-white/50 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] hover:scale-105',
   };
 
   // Size styles

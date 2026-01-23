@@ -4,9 +4,10 @@ import { useTranslation } from '@/lib/i18n';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navigation from '@/app/components/Navigation';
 import HeroSection from '@/app/components/HeroSection';
+import FeaturesSection from '@/app/components/FeaturesSection';
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   return (
     <main className="min-h-screen">
@@ -25,12 +26,13 @@ export default function Home() {
           <div className="min-h-screen flex items-center justify-center bg-gray-50">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Content Unavailable</h2>
-              <p className="text-gray-600">We're having trouble loading the page content.</p>
+              <p className="text-gray-600">We&apos;re having trouble loading the page content.</p>
             </div>
           </div>
         }
       >
         <HeroSection 
+          locale={locale}
           translations={{
             mainHeading: t('hero.mainHeading'),
             groundWord: t('hero.groundWord'),
@@ -38,6 +40,7 @@ export default function Home() {
             ctaButton: t('hero.ctaButton'),
           }}
         />
+        <FeaturesSection />
       </ErrorBoundary>
     </main>
   );

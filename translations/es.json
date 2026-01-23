@@ -9,5 +9,23 @@
     "groundWord": "GROUND",
     "subheading": "Su servicio FBO terrestre premier desde Belice hasta Panamá",
     "ctaButton": "¡Hablemos!"
+  },
+  "features": {
+    "coverage": {
+      "title": "Cobertura",
+      "description": "Soporte 24/7 asegurando que nunca esté sin asistencia."
+    },
+    "operations": {
+      "title": "Operaciones",
+      "description": "Procesos optimizados para operaciones sin problemas."
+    },
+    "experience": {
+      "title": "Experiencia Comprobada",
+      "description": "Décadas de experiencia en la industria de la aviación."
+    },
+    "support": {
+      "title": "Soporte Personalizado",
+      "description": "Asistencia adaptada para satisfacer sus necesidades específicas."
+    }
   }
 }
