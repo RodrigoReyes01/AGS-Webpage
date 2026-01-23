@@ -50,6 +50,11 @@
       "titlePart2": "SERVICES",
       "description": "Our cargo team manages all types of cargo operations, including live animals, hazardous materials, and large-scale project cargo. We partner with leading airlines to provide comprehensive air cargo services, ensuring secure and timely delivery."
     },
+    "passenger": {
+      "titlePart1": "PASSENGER",
+      "titlePart2": "SERVICES",
+      "description": "At Aviation Ground Solutions, our knowledgeable employees ensure passenger safety and satisfaction with exceptional service. Our extensive experience in Central America helps us manage various international air travel challenges effectively."
+    },
     "readMore": "Read More"
   }
 }

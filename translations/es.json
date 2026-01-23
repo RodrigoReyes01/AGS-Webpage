@@ -50,6 +50,11 @@
       "titlePart2": "CARGA",
       "description": "Nuestro equipo de carga gestiona todo tipo de operaciones de carga, incluyendo animales vivos, materiales peligrosos y carga de proyectos a gran escala. Nos asociamos con aerolíneas líderes para proporcionar servicios integrales de carga aérea, asegurando una entrega segura y oportuna."
     },
+    "passenger": {
+      "titlePart1": "SERVICIOS DE",
+      "titlePart2": "PASAJEROS",
+      "description": "En Aviation Ground Solutions, nuestros empleados capacitados garantizan la seguridad y satisfacción de los pasajeros con un servicio excepcional. Nuestra amplia experiencia en Centroamérica nos ayuda a gestionar diversos desafíos de viajes aéreos internacionales de manera efectiva."
+    },
     "readMore": "Leer Más"
   }
 }
