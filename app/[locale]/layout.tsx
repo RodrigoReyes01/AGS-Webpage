@@ -5,8 +5,13 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  title: 'Aviation Ground Solutions',
+  title: 'AGS',
   description: 'Your premier FBO ground service from Belize to Panama',
+  applicationName: 'AGS',
+  icons: {
+    icon: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 // Generate static params for supported locales
