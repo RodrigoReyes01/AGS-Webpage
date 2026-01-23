@@ -1,0 +1,13 @@
+{
+  "navigation": {
+    "aboutUs": "About us",
+    "ourServices": "Our Services",
+    "requestUs": "Request Us"
+  },
+  "hero": {
+    "mainHeading": "AVIATION GROUND SOLUTIONS",
+    "groundWord": "GROUND",
+    "subheading": "Your premier FBO ground service from Belize to Panama",
+    "ctaButton": "Let's Chat!"
+  }
+}

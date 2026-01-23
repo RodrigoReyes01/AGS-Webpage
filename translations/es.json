@@ -1,0 +1,13 @@
+{
+  "navigation": {
+    "aboutUs": "Sobre nosotros",
+    "ourServices": "Nuestros Servicios",
+    "requestUs": "Solicítanos"
+  },
+  "hero": {
+    "mainHeading": "AVIATION GROUND SOLUTIONS",
+    "groundWord": "GROUND",
+    "subheading": "Su servicio FBO terrestre premier desde Belice hasta Panamá",
+    "ctaButton": "¡Hablemos!"
+  }
+}
