@@ -11,6 +11,10 @@ import PassengerServicesSection from '@/app/components/PassengerServicesSection'
 import CateringSection from '@/app/components/CateringSection';
 import GroundHandlingSection from '@/app/components/GroundHandlingSection';
 import FuelServicesSection from '@/app/components/FuelServicesSection';
+import DiscoverServicesSection from '@/app/components/DiscoverServicesSection';
+import WhyAGSSection from '@/app/components/WhyAGSSection';
+import ContactFormSection from '@/app/components/ContactFormSection';
+import Footer from '@/app/components/Footer';
 
 export default function Home() {
   const { t, locale } = useTranslation();
@@ -53,7 +57,12 @@ export default function Home() {
         <CateringSection />
         <GroundHandlingSection />
         <FuelServicesSection />
+        <DiscoverServicesSection />
+        <WhyAGSSection />
+        <ContactFormSection />
       </ErrorBoundary>
+      
+      <Footer />
     </main>
   );
 }

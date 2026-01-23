@@ -71,5 +71,43 @@
       "description": "We collaborate with top brokers and fuel providers for convenient pricing, flexible financing, and seamless coordination, offering cost-effective and hassle-free fueling services tailored to your needs."
     },
     "readMore": "Read More"
+  },
+  "discoverServices": {
+    "titlePart1": "DISCOVER OUR",
+    "titlePart2": "SERVICES",
+    "description": "Explore our full range of expert services designed to meet all your needs, from ground handling and cargo management to flight dispatch and fueling solutions. For more detailed information on each of our offerings, please visit our Services section."
+  },
+  "whyAGS": {
+    "label": "WHY AVIATION GROUND SOLUTIONS",
+    "title": "A different ",
+    "highlight": "approach",
+    "titleEnd": ", utilizing a new method of providing services.",
+    "paragraph1": "Experience seamless travel across Central America with Aviation Ground Solutions. For passenger flights, cargo shipments, charters, or general aviation, we are here for you.",
+    "paragraph2": "Our expert team in Belize, Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica, and Panama ensures professional and comfortable journeys with over 20 years of industry expertise.",
+    "paragraph3": "Choose Aviation Ground Solutions for efficient, reliable, and exceptional service."
+  },
+  "contact": {
+    "title": "Get in Touch With Us",
+    "subtitle": "Have questions or business proposals? Reach out to us today, and let's explore exciting opportunities together.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  },
+  "footer": {
+    "operationalContact": "Operational Contact",
+    "mainContact": "Main contact",
+    "comercialDirector": "Comercial Director",
+    "analyticsContact": "Analytics Contact",
+    "logisticsDirector": "Logistics and Analytics Director",
+    "beInTheKnow": "Be in the Know",
+    "beInTheKnowDescription": "Designing unique experiences to optimize operations in the aviation industry.",
+    "menu": "Menu",
+    "home": "Home",
+    "ourServices": "Our Services",
+    "aboutUs": "About Us",
+    "followUs": "Follow us on",
+    "allRightsReserved": "All rights reserved."
   }
 }

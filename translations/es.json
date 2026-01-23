@@ -71,5 +71,43 @@
       "description": "Colaboramos con los mejores corredores y proveedores de combustible para precios convenientes, financiamiento flexible y coordinación sin problemas, ofreciendo servicios de reabastecimiento rentables y sin complicaciones adaptados a sus necesidades."
     },
     "readMore": "Leer Más"
+  },
+  "discoverServices": {
+    "titlePart1": "DESCUBRA NUESTROS",
+    "titlePart2": "SERVICIOS",
+    "description": "Explore nuestra gama completa de servicios expertos diseñados para satisfacer todas sus necesidades, desde manejo terrestre y gestión de carga hasta despacho de vuelos y soluciones de combustible. Para obtener información más detallada sobre cada una de nuestras ofertas, visite nuestra sección de Servicios."
+  },
+  "whyAGS": {
+    "label": "POR QUÉ AVIATION GROUND SOLUTIONS",
+    "title": "Un ",
+    "highlight": "enfoque",
+    "titleEnd": " diferente, utilizando un nuevo método de prestación de servicios.",
+    "paragraph1": "Experimente viajes sin problemas a través de Centroamérica con Aviation Ground Solutions. Para vuelos de pasajeros, envíos de carga, charters o aviación general, estamos aquí para usted.",
+    "paragraph2": "Nuestro equipo experto en Belice, Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica y Panamá garantiza viajes profesionales y cómodos con más de 20 años de experiencia en la industria.",
+    "paragraph3": "Elija Aviation Ground Solutions para un servicio eficiente, confiable y excepcional."
+  },
+  "contact": {
+    "title": "Póngase en Contacto con Nosotros",
+    "subtitle": "¿Tiene preguntas o propuestas comerciales? Contáctenos hoy y exploremos juntos oportunidades emocionantes.",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo Electrónico",
+    "message": "Mensaje",
+    "send": "Enviar"
+  },
+  "footer": {
+    "operationalContact": "Contacto Operacional",
+    "mainContact": "Contacto Principal",
+    "comercialDirector": "Director Comercial",
+    "analyticsContact": "Contacto de Análisis",
+    "logisticsDirector": "Director de Logística y Análisis",
+    "beInTheKnow": "Manténgase Informado",
+    "beInTheKnowDescription": "Diseñando experiencias únicas para optimizar operaciones en la industria de la aviación.",
+    "menu": "Menú",
+    "home": "Inicio",
+    "ourServices": "Nuestros Servicios",
+    "aboutUs": "Sobre Nosotros",
+    "followUs": "Síguenos en",
+    "allRightsReserved": "Todos los derechos reservados."
   }
 }

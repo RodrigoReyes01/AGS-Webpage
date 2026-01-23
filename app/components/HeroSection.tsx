@@ -49,30 +49,54 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     const checkBackground = () => {
       const scrollY = window.scrollY;
       const viewportHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
       
       // Button is at bottom-right, so we check what section is at the bottom of viewport
       // We need to add viewportHeight to scrollY to get the bottom position
       const bottomPosition = scrollY + viewportHeight;
       
-      // Hero section ends at ~100vh
-      // Features section is from ~100vh to ~200vh
-      // Mission/Vision section starts at ~200vh
+      // Calculate approximate section positions
+      // Hero: 0 to 100vh (dark)
+      // Features: 100vh to ~120vh (light)
+      // Mission/Vision: ~200vh to 300vh (dark)
+      // Services sections: 300vh to ~900vh (white backgrounds)
+      // Why AGS: ~900vh to 1000vh (dark with image)
+      // Contact Form: ~1000vh+ (white)
+      // Footer: last section (black)
       
-      if (bottomPosition < viewportHeight * 1.15) {
-        // Bottom of viewport is in hero section - dark background
+      const heroEnd = viewportHeight * 1.1;
+      const featuresEnd = viewportHeight * 1.3;
+      const missionEnd = viewportHeight * 2.1;
+      
+      // Check if we're near the bottom (footer area)
+      const distanceFromBottom = documentHeight - bottomPosition;
+      const isNearFooter = distanceFromBottom < viewportHeight * 0.3; // Within 30% of viewport height from bottom
+      
+      if (isNearFooter) {
+        // In footer section - black background
         setIsDarkBackground(true);
-      } else if (bottomPosition < viewportHeight * 2.15) {
-        // Bottom of viewport is in features section - light background
+      } else if (bottomPosition < heroEnd) {
+        // In hero section - dark background
+        setIsDarkBackground(true);
+      } else if (bottomPosition < featuresEnd) {
+        // In features section - light background
         setIsDarkBackground(false);
-      } else {
-        // Bottom of viewport is in mission/vision section - dark background
+      } else if (bottomPosition < missionEnd) {
+        // In mission/vision section - dark background
         setIsDarkBackground(true);
+      } else {
+        // All other sections (services, contact) - light/white background
+        setIsDarkBackground(false);
       }
     };
 
     checkBackground();
     window.addEventListener('scroll', checkBackground, { passive: true });
-    return () => window.removeEventListener('scroll', checkBackground);
+    window.addEventListener('resize', checkBackground, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', checkBackground);
+      window.removeEventListener('resize', checkBackground);
+    };
   }, []);
 
   // WhatsApp contact handler
@@ -180,8 +204,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           onClick={handleWhatsAppClick}
           className={`w-14 h-14 rounded-full font-semibold transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-2xl border-2 hover:scale-110 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] flex items-center justify-center ${
             isDarkBackground
-              ? 'bg-white/10 text-white border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50'
-              : 'bg-gray-900/10 text-gray-900 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50'
+              ? 'bg-white/10 border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50 !text-white'
+              : 'bg-gray-900/10 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50 !text-gray-900'
           }`}
           aria-label={translations.ctaButton || "Let's Chat!"}
         >
@@ -207,8 +231,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           onClick={handleWhatsAppClick}
           className={`font-semibold rounded-lg px-8 py-4 text-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-2xl border-2 hover:scale-105 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] flex items-center gap-3 ${
             isDarkBackground
-              ? 'bg-white/10 text-white border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50'
-              : 'bg-gray-900/10 text-gray-900 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50'
+              ? 'bg-white/10 border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50 !text-white'
+              : 'bg-gray-900/10 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50 !text-gray-900'
           }`}
         >
           <svg 

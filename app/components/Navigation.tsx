@@ -33,26 +33,41 @@ const Navigation: React.FC = () => {
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const firstFocusableElementRef = useRef<HTMLAnchorElement>(null);
 
-  // Detect background color based on navbar position (top of viewport)
+  // Detect background color based on where the right-side nav links are positioned
   useEffect(() => {
     const checkBackground = () => {
       const scrollY = window.scrollY;
       const viewportHeight = window.innerHeight;
       
-      // Navbar is at the top, so we check what section is at the top of viewport
-      // Hero section is dark (0 to ~100vh)
-      // Features section is light (100vh to ~200vh)
-      // Mission/Vision section is dark (200vh+)
+      // The nav links are on the right side of the navbar at the top of the viewport
+      // We check what section is behind the navbar (top ~80px of viewport)
+      // Since navbar is at top, we use scrollY to determine which section is visible
       
-      if (scrollY < viewportHeight * 0.85) {
-        // Top of viewport is in hero section - dark background
+      // Section positions:
+      // Hero: 0 to 100vh (dark)
+      // Features: 100vh to ~120vh (light)
+      // Mission/Vision: ~200vh to 300vh (dark)
+      // Services sections: 300vh to ~900vh (white backgrounds)
+      // Why AGS: ~900vh to 1000vh (dark with image)
+      // Contact Form: ~1000vh+ (white)
+      // Footer: last section (black)
+      
+      const heroEnd = viewportHeight * 0.85;
+      const featuresEnd = viewportHeight * 1.85;
+      const missionEnd = viewportHeight * 2.85;
+      
+      if (scrollY < heroEnd) {
+        // In hero section - dark background
         setIsDarkBackground(true);
-      } else if (scrollY < viewportHeight * 1.85) {
-        // Top of viewport is in features section - light background
+      } else if (scrollY < featuresEnd) {
+        // In features section - light background
         setIsDarkBackground(false);
-      } else {
-        // Top of viewport is in mission/vision section - dark background
+      } else if (scrollY < missionEnd) {
+        // In mission/vision section - dark background
         setIsDarkBackground(true);
+      } else {
+        // All other sections (services, contact, footer) - mostly light/white backgrounds
+        setIsDarkBackground(false);
       }
     };
 
