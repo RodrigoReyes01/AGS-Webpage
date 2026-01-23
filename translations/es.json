@@ -27,5 +27,29 @@
       "title": "Soporte Personalizado",
       "description": "Asistencia adaptada para satisfacer sus necesidades específicas."
     }
+  },
+  "missionVision": {
+    "mission": {
+      "label": "NUESTRA MISIÓN",
+      "title": "Asegurando Asistencia",
+      "highlight": "Terrestre Perfecta",
+      "description": "Facilitar asistencia terrestre a nuestros Pasajeros, Carga y Vuelos Charter. Promovemos y fortalecemos nuestras relaciones interpersonales manteniendo el mismo personal."
+    },
+    "vision": {
+      "label": "NUESTRA VISIÓN",
+      "title": "Dominando el Soporte",
+      "highlight": "Terrestre",
+      "description": "Ser la empresa de soporte terrestre y FBO preferida con el mejor equipo en la región centroamericana y otras regiones."
+    }
+  },
+  "services": {
+    "label": "SERVICIOS",
+    "title": "Entregamos Servicios Excepcionales para Nuestros Clientes.",
+    "cargo": {
+      "titlePart1": "SERVICIOS DE",
+      "titlePart2": "CARGA",
+      "description": "Nuestro equipo de carga gestiona todo tipo de operaciones de carga, incluyendo animales vivos, materiales peligrosos y carga de proyectos a gran escala. Nos asociamos con aerolíneas líderes para proporcionar servicios integrales de carga aérea, asegurando una entrega segura y oportuna."
+    },
+    "readMore": "Leer Más"
   }
 }

@@ -5,6 +5,8 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Navigation from '@/app/components/Navigation';
 import HeroSection from '@/app/components/HeroSection';
 import FeaturesSection from '@/app/components/FeaturesSection';
+import MissionVisionSection from '@/app/components/MissionVisionSection';
+import ServicesSection from '@/app/components/ServicesSection';
 
 export default function Home() {
   const { t, locale } = useTranslation();
@@ -41,6 +43,8 @@ export default function Home() {
           }}
         />
         <FeaturesSection />
+        <MissionVisionSection />
+        <ServicesSection />
       </ErrorBoundary>
     </main>
   );

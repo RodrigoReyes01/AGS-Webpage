@@ -27,5 +27,29 @@
       "title": "Personalized Support",
       "description": "Tailored assistance to meet your specific needs."
     }
+  },
+  "missionVision": {
+    "mission": {
+      "label": "OUR MISSION",
+      "title": "Ensuring Seamless",
+      "highlight": "Ground Assistance",
+      "description": "Facilitate ground assistance to our Passengers, Cargo and Charter Flights. We promote and strengthen our interpersonal relationships by keeping the same staff."
+    },
+    "vision": {
+      "label": "OUR VISION",
+      "title": "Dominating Ground",
+      "highlight": "Support",
+      "description": "To be the preferred ground support and FBO company with the best team in the Central American region and other regions."
+    }
+  },
+  "services": {
+    "label": "SERVICES",
+    "title": "We Deliver Exceptional Services for Our Customers.",
+    "cargo": {
+      "titlePart1": "CARGO",
+      "titlePart2": "SERVICES",
+      "description": "Our cargo team manages all types of cargo operations, including live animals, hazardous materials, and large-scale project cargo. We partner with leading airlines to provide comprehensive air cargo services, ensuring secure and timely delivery."
+    },
+    "readMore": "Read More"
   }
 }

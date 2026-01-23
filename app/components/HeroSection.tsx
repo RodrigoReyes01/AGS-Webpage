@@ -42,6 +42,38 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   backgroundImage = '/images/hero.png',
 }) => {
   const { isVisible: isButtonVisible } = useScroll();
+  const [isDarkBackground, setIsDarkBackground] = React.useState(true);
+
+  // Detect background color for button based on bottom-right position
+  React.useEffect(() => {
+    const checkBackground = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      
+      // Button is at bottom-right, so we check what section is at the bottom of viewport
+      // We need to add viewportHeight to scrollY to get the bottom position
+      const bottomPosition = scrollY + viewportHeight;
+      
+      // Hero section ends at ~100vh
+      // Features section is from ~100vh to ~200vh
+      // Mission/Vision section starts at ~200vh
+      
+      if (bottomPosition < viewportHeight * 1.15) {
+        // Bottom of viewport is in hero section - dark background
+        setIsDarkBackground(true);
+      } else if (bottomPosition < viewportHeight * 2.15) {
+        // Bottom of viewport is in features section - light background
+        setIsDarkBackground(false);
+      } else {
+        // Bottom of viewport is in mission/vision section - dark background
+        setIsDarkBackground(true);
+      }
+    };
+
+    checkBackground();
+    window.addEventListener('scroll', checkBackground, { passive: true });
+    return () => window.removeEventListener('scroll', checkBackground);
+  }, []);
 
   // WhatsApp contact handler
   const handleWhatsAppClick = () => {
@@ -115,29 +147,83 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           {translations.subheading || 'Your premier FBO ground service from Belize to Panama'}
         </p>
 
-        {/* CTA Button - Requirements 3.4, 4.2 - Centered on mobile, hidden on tablet/desktop */}
+        {/* CTA Button - Requirements 3.4, 4.2 - Centered on mobile in hero, hidden on tablet/desktop */}
         <div className="md:hidden">
           <Button 
             variant="glass" 
             size="lg"
             onClick={handleWhatsAppClick}
           >
-            {translations.ctaButton || "Let's Chat!"}
+            <span className="flex items-center gap-2">
+              <svg 
+                className="w-5 h-5" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              {translations.ctaButton || "Let's Chat!"}
+            </span>
           </Button>
         </div>
+      </div>
+
+      {/* Floating Action Button - Mobile only - Fixed bottom-right with icon only */}
+      <div className={`md:hidden fixed bottom-6 right-6 z-50 transition-all duration-300 ease-in-out ${
+        isButtonVisible ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
+      }`}>
+        <button
+          onClick={handleWhatsAppClick}
+          className={`w-14 h-14 rounded-full font-semibold transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-2xl border-2 hover:scale-110 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] flex items-center justify-center ${
+            isDarkBackground
+              ? 'bg-white/10 text-white border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50'
+              : 'bg-gray-900/10 text-gray-900 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50'
+          }`}
+          aria-label={translations.ctaButton || "Let's Chat!"}
+        >
+          <svg 
+            className="w-6 h-6" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2"
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
       </div>
 
       {/* CTA Button - Requirements 3.4, 4.2 - Positioned bottom-right on tablet/desktop, hidden on mobile */}
       <div className={`hidden md:block fixed bottom-8 right-8 lg:bottom-12 lg:right-12 z-50 transition-all duration-300 ease-in-out ${
         isButtonVisible ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
       }`}>
-        <Button 
-          variant="glass" 
-          size="lg"
+        <button
           onClick={handleWhatsAppClick}
+          className={`font-semibold rounded-lg px-8 py-4 text-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-2xl border-2 hover:scale-105 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] flex items-center gap-3 ${
+            isDarkBackground
+              ? 'bg-white/10 text-white border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50'
+              : 'bg-gray-900/10 text-gray-900 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50'
+          }`}
         >
+          <svg 
+            className="w-6 h-6" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2"
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
           {translations.ctaButton || "Let's Chat!"}
-        </Button>
+        </button>
       </div>
     </header>
   );

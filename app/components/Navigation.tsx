@@ -28,9 +28,38 @@ const Navigation: React.FC = () => {
   const { t } = useTranslation();
   const { isVisible } = useScroll();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkBackground, setIsDarkBackground] = useState(true);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const firstFocusableElementRef = useRef<HTMLAnchorElement>(null);
+
+  // Detect background color based on navbar position (top of viewport)
+  useEffect(() => {
+    const checkBackground = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      
+      // Navbar is at the top, so we check what section is at the top of viewport
+      // Hero section is dark (0 to ~100vh)
+      // Features section is light (100vh to ~200vh)
+      // Mission/Vision section is dark (200vh+)
+      
+      if (scrollY < viewportHeight * 0.85) {
+        // Top of viewport is in hero section - dark background
+        setIsDarkBackground(true);
+      } else if (scrollY < viewportHeight * 1.85) {
+        // Top of viewport is in features section - light background
+        setIsDarkBackground(false);
+      } else {
+        // Top of viewport is in mission/vision section - dark background
+        setIsDarkBackground(true);
+      }
+    };
+
+    checkBackground();
+    window.addEventListener('scroll', checkBackground, { passive: true });
+    return () => window.removeEventListener('scroll', checkBackground);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -129,24 +158,24 @@ const Navigation: React.FC = () => {
             </Link>
           </div>
 
-          {/* Navigation Links - Center (Desktop only) */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Right Section - Navigation Links, Request Button and Language Selector (Desktop) */}
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               href="#about"
-              className="text-white hover:text-brand-blue font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg"
+              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
+                isDarkBackground ? 'text-white hover:text-brand-blue' : 'text-gray-900 hover:text-brand-blue'
+              }`}
             >
               {t('navigation.aboutUs')}
             </Link>
             <Link
               href="#services"
-              className="text-white hover:text-brand-blue font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg"
+              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
+                isDarkBackground ? 'text-white hover:text-brand-blue' : 'text-gray-900 hover:text-brand-blue'
+              }`}
             >
               {t('navigation.ourServices')}
             </Link>
-          </div>
-
-          {/* Right Section - Request Button and Language Selector (Desktop) */}
-          <div className="hidden md:flex items-center space-x-4">
             <Button
               variant="primary"
               size="md"
@@ -166,7 +195,9 @@ const Navigation: React.FC = () => {
             <button
               ref={toggleButtonRef}
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-brand-blue hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-blue transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg"
+              className={`inline-flex items-center justify-center p-2 rounded-md hover:text-brand-blue hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-blue transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg ${
+                isDarkBackground ? 'text-white' : 'text-gray-900'
+              }`}
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
