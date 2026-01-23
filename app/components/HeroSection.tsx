@@ -3,6 +3,7 @@
 import React from 'react';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import Button from '@/components/Button';
+import { useScroll } from '@/lib/scrollContext';
 
 /**
  * HeroSection component
@@ -40,31 +41,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   },
   backgroundImage = '/images/hero.png',
 }) => {
-  const [isButtonVisible, setIsButtonVisible] = React.useState(true);
-  const [lastScrollY, setLastScrollY] = React.useState(0);
-
-  // Handle scroll to show/hide button
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Show button when scrolling up or at the top
-      if (currentScrollY < lastScrollY || currentScrollY < 10) {
-        setIsButtonVisible(true);
-      } 
-      // Hide button when scrolling down (after 100px)
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsButtonVisible(false);
-      }
-      
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY]);
+  const { isVisible: isButtonVisible } = useScroll();
 
   // WhatsApp contact handler
   const handleWhatsAppClick = () => {

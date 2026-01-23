@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { I18nProvider } from '@/lib/i18n';
+import { ScrollProvider } from '@/lib/scrollContext';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import '../globals.css';
 
@@ -31,7 +32,9 @@ export default function LocaleLayout({
       <body>
         <ErrorBoundary>
           <I18nProvider initialLocale={locale}>
-            {children}
+            <ScrollProvider>
+              {children}
+            </ScrollProvider>
           </I18nProvider>
         </ErrorBoundary>
       </body>

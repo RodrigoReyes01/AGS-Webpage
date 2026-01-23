@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Button from '@/components/Button';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslation } from '@/lib/i18n';
+import { useScroll } from '@/lib/scrollContext';
 
 /**
  * Navigation component
@@ -25,9 +26,8 @@ import { useTranslation } from '@/lib/i18n';
  */
 const Navigation: React.FC = () => {
   const { t } = useTranslation();
+  const { isVisible } = useScroll();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const firstFocusableElementRef = useRef<HTMLAnchorElement>(null);
@@ -39,33 +39,6 @@ const Navigation: React.FC = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-
-  // Handle scroll to show/hide navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Show navbar when scrolling up or at the top
-      if (currentScrollY < lastScrollY || currentScrollY < 10) {
-        setIsVisible(true);
-      } 
-      // Hide navbar when scrolling down (after 100px)
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-        // Close mobile menu if open when hiding navbar
-        if (isMobileMenuOpen) {
-          closeMobileMenu();
-        }
-      }
-      
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY, isMobileMenuOpen]);
 
   // Handle Escape key to close mobile menu and return focus
   useEffect(() => {
