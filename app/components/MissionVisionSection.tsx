@@ -56,15 +56,22 @@ const MissionVisionSection: React.FC = () => {
       const sectionStart = viewportHeight * 2;
       const relativeScroll = scrollY - sectionStart;
       
-      // Apply parallax effect with a smaller multiplier (0.15 for subtle effect)
-      const offset = relativeScroll * 0.15;
+      // Apply parallax effect with different multipliers for mobile vs desktop
+      // Mobile: 0.06 (subtle), Desktop: 0.15 (subtle)
+      const isMobile = window.innerWidth < 768;
+      const multiplier = isMobile ? 0.06 : 0.15;
+      const offset = relativeScroll * multiplier;
       setParallaxOffset(offset);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll(); // Initial calculation
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   const handleDotClick = (index: number) => {
@@ -72,9 +79,9 @@ const MissionVisionSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full h-screen min-h-[600px] flex">
+    <section className="relative w-full h-screen min-h-[600px] flex flex-col md:flex-row">
       {/* Left Side - Text Content (Black Background) */}
-      <div className="w-full md:w-1/2 bg-black text-white flex items-center p-8 md:p-16 relative overflow-hidden">
+      <div className="w-full md:w-1/2 bg-black text-white flex items-center p-8 md:p-16 relative overflow-hidden order-1">
         {/* Vertical accent line */}
         <div className="absolute left-8 md:left-16 top-1/4 bottom-1/4 w-1 bg-white" />
 
@@ -128,7 +135,7 @@ const MissionVisionSection: React.FC = () => {
       </div>
 
       {/* Right Side - Image with Parallax */}
-      <div className="hidden md:block w-1/2 relative bg-gray-900 overflow-hidden">
+      <div className="w-full md:w-1/2 relative bg-gray-900 overflow-hidden h-[50vh] md:h-auto order-2">
         <div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -146,7 +153,7 @@ const MissionVisionSection: React.FC = () => {
             fill
             priority
             quality={85}
-            sizes="50vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
             showLoadingPlaceholder={false}
           />

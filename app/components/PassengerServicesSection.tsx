@@ -29,21 +29,28 @@ const PassengerServicesSection: React.FC = () => {
       const sectionStart = viewportHeight * 4;
       const relativeScroll = scrollY - sectionStart;
       
-      // Apply parallax effect with a subtle multiplier (0.15)
-      const offset = relativeScroll * 0.15;
+      // Apply parallax effect with different multipliers for mobile vs desktop
+      // Mobile: 0.06 (subtle), Desktop: 0.15 (subtle)
+      const isMobile = window.innerWidth < 768;
+      const multiplier = isMobile ? 0.06 : 0.15;
+      const offset = relativeScroll * multiplier;
       setParallaxOffset(offset);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll(); // Initial calculation
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
-    <section className="relative w-full min-h-screen flex bg-white">
-      {/* Left Side - Image with Parallax */}
-      <div className="hidden md:block w-1/2 relative bg-gray-100 overflow-hidden">
+    <section className="relative w-full min-h-screen flex flex-col md:flex-row bg-white">
+      {/* Left Side - Image with Parallax (Desktop: left, Mobile: bottom) */}
+      <div className="w-full md:w-1/2 relative bg-gray-100 overflow-hidden h-[50vh] md:h-auto order-2 md:order-1">
         <div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -61,15 +68,15 @@ const PassengerServicesSection: React.FC = () => {
             fill
             priority
             quality={85}
-            sizes="50vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
             showLoadingPlaceholder={false}
           />
         </div>
       </div>
 
-      {/* Right Side - Text Content */}
-      <div className="w-full md:w-1/2 flex items-center p-8 md:p-16 relative">
+      {/* Right Side - Text Content (Desktop: right, Mobile: top) */}
+      <div className="w-full md:w-1/2 flex items-center p-8 md:p-16 relative order-1 md:order-2">
         {/* Vertical accent line */}
         <div className="absolute left-8 md:left-16 top-1/4 bottom-1/4 w-1 bg-black" />
 

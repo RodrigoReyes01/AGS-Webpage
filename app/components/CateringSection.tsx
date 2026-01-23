@@ -5,8 +5,8 @@ import { useTranslation } from '@/lib/i18n';
 import ImageWithFallback from '@/components/ImageWithFallback';
 
 /**
- * ServicesSection component
- * Displays cargo services with parallax image effect
+ * CateringSection component
+ * Displays catering coordination services with parallax image effect
  * 
  * Features:
  * - Split layout: text on left, image on right
@@ -14,7 +14,7 @@ import ImageWithFallback from '@/components/ImageWithFallback';
  * - Parallax effect on image
  * - "Read More" call-to-action button
  */
-const ServicesSection: React.FC = () => {
+const CateringSection: React.FC = () => {
   const { t } = useTranslation();
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
@@ -25,8 +25,8 @@ const ServicesSection: React.FC = () => {
       const viewportHeight = window.innerHeight;
       
       // Calculate parallax offset relative to when the section is in view
-      // Section starts at ~300vh (after hero + features + mission/vision)
-      const sectionStart = viewportHeight * 3;
+      // Section starts at ~500vh (after hero + features + mission/vision + cargo + passenger)
+      const sectionStart = viewportHeight * 5;
       const relativeScroll = scrollY - sectionStart;
       
       // Apply parallax effect with different multipliers for mobile vs desktop
@@ -56,26 +56,16 @@ const ServicesSection: React.FC = () => {
 
         {/* Content Container */}
         <div className="max-w-xl ml-8 md:ml-16 relative z-10 w-full">
-          {/* Label */}
-          <p className="text-sm uppercase tracking-wider mb-6 text-gray-500">
-            {t('services.label')}
-          </p>
-
-          {/* Title */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight text-gray-900">
-            {t('services.title')}
-          </h2>
-
           {/* Service Title */}
           <h3 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">
-            <span className="text-gray-900">{t('services.cargo.titlePart1')}</span>
+            <span className="text-gray-900">{t('services.catering.titlePart1')}</span>
             <br />
-            <span className="text-brand-blue">{t('services.cargo.titlePart2')}</span>
+            <span className="text-brand-blue">{t('services.catering.titlePart2')}</span>
           </h3>
 
           {/* Description */}
           <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-8">
-            {t('services.cargo.description')}
+            {t('services.catering.description')}
           </p>
 
           {/* Read More Button */}
@@ -105,19 +95,19 @@ const ServicesSection: React.FC = () => {
             transform: `translate3d(0, ${parallaxOffset}px, 0) scale(1.15)`,
             willChange: 'transform',
             top: '-7.5%',
-            left: '0%',
+            left: '-7.5%',
             width: '115%',
             height: '115%',
           }}
         >
           <ImageWithFallback
-            src="/images/CargoServices.png"
-            alt="Aviation Ground Solutions - Cargo Services"
+            src="/images/CateringServices.png"
+            alt="Aviation Ground Solutions - Catering Coordination"
             fill
             priority
             quality={85}
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-right"
+            className="object-cover"
             showLoadingPlaceholder={false}
           />
         </div>
@@ -126,4 +116,4 @@ const ServicesSection: React.FC = () => {
   );
 };
 
-export default ServicesSection;
+export default CateringSection;

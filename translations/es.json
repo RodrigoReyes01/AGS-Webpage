@@ -55,6 +55,11 @@
       "titlePart2": "PASAJEROS",
       "description": "En Aviation Ground Solutions, nuestros empleados capacitados garantizan la seguridad y satisfacción de los pasajeros con un servicio excepcional. Nuestra amplia experiencia en Centroamérica nos ayuda a gestionar diversos desafíos de viajes aéreos internacionales de manera efectiva."
     },
+    "catering": {
+      "titlePart1": "COORDINACIÓN DE",
+      "titlePart2": "CATERING",
+      "description": "Proporcionamos una amplia gama de opciones de catering de alta calidad, desde comidas gourmet hasta bocadillos simples, asegurando experiencias gastronómicas excepcionales en vuelo. También coordinamos el transporte terrestre eficiente para la tripulación, asegurando movimientos oportunos hacia y desde el aeropuerto."
+    },
     "readMore": "Leer Más"
   }
 }

@@ -8,6 +8,7 @@ import FeaturesSection from '@/app/components/FeaturesSection';
 import MissionVisionSection from '@/app/components/MissionVisionSection';
 import ServicesSection from '@/app/components/ServicesSection';
 import PassengerServicesSection from '@/app/components/PassengerServicesSection';
+import CateringSection from '@/app/components/CateringSection';
 
 export default function Home() {
   const { t, locale } = useTranslation();
@@ -47,6 +48,7 @@ export default function Home() {
         <MissionVisionSection />
         <ServicesSection />
         <PassengerServicesSection />
+        <CateringSection />
       </ErrorBoundary>
     </main>
   );
