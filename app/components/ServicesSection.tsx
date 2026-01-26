@@ -74,26 +74,9 @@ const ServicesSection: React.FC = () => {
           </h3>
 
           {/* Description */}
-          <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-8">
+          <p className="text-gray-600 text-base md:text-lg leading-relaxed">
             {t('services.cargo.description')}
           </p>
-
-          {/* Read More Button */}
-          <button className="inline-flex items-center gap-2 px-6 py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-lg hover:bg-gray-900 hover:text-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
-            {t('services.readMore')}
-            <svg 
-              className="w-5 h-5" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2"
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </button>
         </div>
       </div>
 
