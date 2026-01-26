@@ -176,7 +176,7 @@ const Navigation: React.FC = () => {
           {/* Right Section - Navigation Links, Request Button and Language Selector (Desktop) */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
-              href="#about"
+              href="/about"
               className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
                 isDarkBackground ? 'text-white hover:text-brand-blue' : 'text-gray-900 hover:text-brand-blue'
               }`}
@@ -266,7 +266,7 @@ const Navigation: React.FC = () => {
           <div className="flex flex-col space-y-4">
             <Link
               ref={firstFocusableElementRef}
-              href="#about"
+              href="/about"
               onClick={closeMobileMenu}
               className="text-gray-800 hover:text-brand-blue font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-3 py-2 text-base relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out bg-white/20 hover:bg-white/40"
               tabIndex={isMobileMenuOpen ? 0 : -1}

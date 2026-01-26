@@ -95,6 +95,70 @@
     "message": "Mensaje",
     "send": "Enviar"
   },
+  "about": {
+    "hero": {
+      "title": "Donde cada",
+      "titleHighlight": "despegue",
+      "titleEnd": "comienza con un servicio excepcional.",
+      "subtitle": "En",
+      "subtitleBold": "AGS, la excelencia",
+      "subtitleMid": "toma",
+      "subtitleBold2": "vuelo",
+      "subtitleEnd": "mucho antes de que",
+      "subtitleBold3": "salgas",
+      "subtitleFinal": "de la",
+      "subtitleBold4": "pista."
+    },
+    "cards": {
+      "coverage": {
+        "title": "NUESTRA",
+        "titleHighlight": "COBERTURA",
+        "description": "Nuestra presencia regional abarca desde Belice hasta Panamá, asegurando que podamos brindar apoyo donde lo necesite. Con disponibilidad 24/7, siempre estamos listos para asistirle, sin importar la hora o ubicación. Nuestro compromiso de estar ahí para usted las 24 horas garantiza que nunca esté sin asistencia."
+      },
+      "operations": {
+        "title": "NUESTRAS",
+        "titleHighlight": "OPERACIONES",
+        "description": "Nos enorgullecemos de nuestra coordinación eficiente, asegurando operaciones sin problemas en cada paso. Nuestros servicios integrales cubren todo, desde manejo terrestre hasta soporte logístico, permitiéndonos gestionar todos los aspectos de sus necesidades de aviación. Esto garantiza que sus operaciones funcionen sin problemas e interrupciones."
+      },
+      "experience": {
+        "title": "EXPERIENCIA",
+        "titleHighlight": "COMPROBADA",
+        "description": "Con 20 años de experiencia en la industria de la aviación, aportamos décadas de conocimiento y experiencia. Nuestras asociaciones de confianza con aerolíneas y operadores líderes son un testimonio de nuestra confiabilidad y excelencia. Estas relaciones nos permiten ofrecer servicios y soluciones de primer nivel adaptados a sus necesidades."
+      },
+      "team": {
+        "title": "EQUIPO DEDICADO DE",
+        "titleHighlight": "ESPECIALISTAS",
+        "description": "Nuestro equipo de profesionales altamente capacitados se dedica a brindar un servicio excepcional. Con un enfoque en soporte personalizado, adaptamos nuestra asistencia para satisfacer sus requisitos específicos. Nuestro personal experimentado garantiza que cada aspecto de sus necesidades de aviación se maneje con cuidado y experiencia."
+      }
+    },
+    "timeline": {
+      "title": "Nuestra Línea de Tiempo en AGS",
+      "subtitle": "Descubra nuestra línea de tiempo en AGS y conozca nuestros hitos más notables, explorando nuestros logros y avances en la industria de servicios aeroportuarios."
+    },
+    "stats": {
+      "label": "SOBRE NOSOTROS",
+      "title": "MÁS A",
+      "titleHighlight": "PROFUNDIDAD",
+      "description": "Aviation Ground Solutions es una empresa fundada en 2019 con un equipo que tiene más de 20 años de experiencia en la industria y presencia en toda Centroamérica. En AGS, nuestra misión es siempre contribuir a la satisfacción de nuestros clientes, asegurando que tengan una experiencia positiva bajo nuestro cuidado.",
+      "employees": "EMPLEADOS",
+      "coreEmployees": "EMPLEADOS PRINCIPALES",
+      "locations": "UBICACIONES EN PAÍSES",
+      "experience": "AÑOS DE EXPERIENCIA"
+    },
+    "locations": {
+      "title": "Descubra Nuestras Ubicaciones",
+      "description": "Nuestro equipo experto está estratégicamente ubicado en Belice, Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica y Panamá, asegurando soporte fluido y eficiente donde lo necesite.",
+      "contactLabel": "UBICACIÓN",
+      "contactTitle": "MANTÉNGASE CONECTADO CON",
+      "contactHighlight": "NOSOTROS AHORA",
+      "contactDescription": "Tenemos presencia en toda Centroamérica. Puede conectarse con nosotros a través de Google Maps o Waze. Además, puede contactarnos a través de nuestros canales de redes sociales o utilizando nuestro formulario de contacto en el sitio web para cualquier consulta o soporte."
+    },
+    "partners": {
+      "title": "Gracias a Nuestros",
+      "titleHighlight": "Socios",
+      "description": "Podemos expandir nuestros servicios en toda la región LATAM, brindando soluciones integrales y de alta calidad en múltiples países."
+    }
+  },
   "footer": {
     "operationalContact": "Contacto Operacional",
     "mainContact": "Contacto Principal",

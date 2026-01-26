@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
 import ImageWithFallback from '@/components/ImageWithFallback';
+import Link from 'next/link';
 
 const WhyAGSSection: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
   useEffect(() => {
@@ -91,21 +92,23 @@ const WhyAGSSection: React.FC = () => {
           </p>
 
           {/* Read More Button */}
-          <button className="inline-flex items-center gap-2 px-4 py-2 border-2 border-white text-white text-sm font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
-            {t('services.readMore')}
-            <svg 
-              className="w-4 h-4" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2"
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </button>
+          <Link href={`/${locale}/about`}>
+            <button className="inline-flex items-center gap-2 px-4 py-2 border-2 border-white text-white text-sm font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
+              {t('services.readMore')}
+              <svg 
+                className="w-4 h-4" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </Link>
         </div>
       </div>
     </section>

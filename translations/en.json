@@ -95,6 +95,70 @@
     "message": "Message",
     "send": "Send"
   },
+  "about": {
+    "hero": {
+      "title": "Where every",
+      "titleHighlight": "takeoff",
+      "titleEnd": "begins with exceptional service.",
+      "subtitle": "At",
+      "subtitleBold": "AGS, excellence",
+      "subtitleMid": "takes",
+      "subtitleBold2": "flight",
+      "subtitleEnd": "long before you",
+      "subtitleBold3": "leave",
+      "subtitleFinal": "the",
+      "subtitleBold4": "runway."
+    },
+    "cards": {
+      "coverage": {
+        "title": "OUR",
+        "titleHighlight": "COVERAGE",
+        "description": "Our regional presence spans from Belize to Panama, ensuring that we can provide support wherever you need it. With 24/7 availability, we're always ready to assist you, no matter the time or location. Our commitment to being there for you around the clock guarantees that you are never without assistance."
+      },
+      "operations": {
+        "title": "OUR",
+        "titleHighlight": "OPERATIONS",
+        "description": "We pride ourselves on our efficient coordination, ensuring seamless operations at every step. Our comprehensive services cover everything from ground handling to logistical support, allowing us to manage all aspects of your aviation needs. This ensures that your operations run smoothly and without interruption."
+      },
+      "experience": {
+        "title": "PROVEN",
+        "titleHighlight": "EXPERIENCE",
+        "description": "With 20 years of expertise in the aviation industry, we bring decades of knowledge and experience to the table. Our trusted partnerships with leading airlines and operators are a testament to our reliability and excellence. These relationships enable us to offer top-tier services and solutions tailored to your needs."
+      },
+      "team": {
+        "title": "DEDICATED TEAM OF",
+        "titleHighlight": "SPECIALISTS",
+        "description": "Our team of highly trained professionals is dedicated to providing exceptional service. With a focus on personalized support, we tailor our assistance to meet your specific requirements. Our experienced staff ensures that every aspect of your aviation needs is handled with care and expertise."
+      }
+    },
+    "timeline": {
+      "title": "Our Timeline in AGS",
+      "subtitle": "Discover our timeline at AGS and learn about our most notable milestones, exploring our achievements and advances in the airport services industry."
+    },
+    "stats": {
+      "label": "ABOUT US",
+      "title": "MORE IN",
+      "titleHighlight": "DEPTH",
+      "description": "Aviation Ground Solutions is a company founded in 2019 with a team that has over 20 years of experience in the industry and a presence throughout Central America. At AGS, our mission is to always contribute to the satisfaction of our clients, ensuring they have a positive experience under our care.",
+      "employees": "EMPLOYEES",
+      "coreEmployees": "CORE EMPLOYEES",
+      "locations": "COUNTRY LOCATIONS",
+      "experience": "YEARS OF EXPERIENCE"
+    },
+    "locations": {
+      "title": "Discover Our Locations",
+      "description": "Our expert team is strategically located in Belize, Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica, and Panama, ensuring seamless and efficient support wherever you need it.",
+      "contactLabel": "LOCATION",
+      "contactTitle": "STAY CONNECTED WITH",
+      "contactHighlight": "US NOW",
+      "contactDescription": "We have a presence throughout Central America. You can connect with us via Google Maps or Waze. Additionally, you can reach us through our social media channels or by using our contact form on the website for any inquiries or support."
+    },
+    "partners": {
+      "title": "Thanks to Our",
+      "titleHighlight": "Partners",
+      "description": "We can expand our services throughout the entire LATAM region, providing comprehensive and high-quality solutions across multiple countries."
+    }
+  },
   "footer": {
     "operationalContact": "Operational Contact",
     "mainContact": "Main contact",
