@@ -4,6 +4,7 @@ import React from 'react';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import Button from '@/components/Button';
 import { useScroll } from '@/lib/scrollContext';
+import FloatingContactMenu from './FloatingContactMenu';
 
 /**
  * HeroSection component
@@ -99,23 +100,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     };
   }, []);
 
-  // WhatsApp contact handler
+  // WhatsApp contact handler (for mobile hero button only)
   const handleWhatsAppClick = () => {
-    // Format: +502 4100 2147 -> 50241002147 (remove spaces and keep country code)
     const phoneNumber = '50241002147';
-    
-    // Contextual message based on locale
     const messages = {
       en: 'Hello! I would like to know more about your services.',
       es: '¡Hola! Me gustaría saber más sobre sus servicios.',
     };
-    
     const message = encodeURIComponent(messages[locale as keyof typeof messages] || messages.en);
-    
-    // WhatsApp URL - will open app if installed, otherwise web.whatsapp.com
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    
-    // Open in new tab
     window.open(whatsappUrl, '_blank');
   };
 
@@ -197,58 +190,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Floating Action Button - Mobile only - Fixed bottom-right with icon only */}
-      <div className={`md:hidden fixed bottom-6 right-6 z-50 transition-all duration-300 ease-in-out ${
-        isButtonVisible ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
-      }`}>
-        <button
-          onClick={handleWhatsAppClick}
-          className={`w-14 h-14 rounded-full font-semibold transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-2xl border-2 hover:scale-110 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] flex items-center justify-center ${
-            isDarkBackground
-              ? 'bg-white/10 border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50 !text-white'
-              : 'bg-gray-900/10 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50 !text-gray-900'
-          }`}
-          aria-label={translations.ctaButton || "Let's Chat!"}
-        >
-          <svg 
-            className="w-6 h-6" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2"
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-        </button>
-      </div>
-
-      {/* CTA Button - Requirements 3.4, 4.2 - Positioned bottom-right on tablet/desktop, hidden on mobile */}
-      <div className={`hidden md:block fixed bottom-8 right-8 lg:bottom-12 lg:right-12 z-50 transition-all duration-300 ease-in-out ${
-        isButtonVisible ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
-      }`}>
-        <button
-          onClick={handleWhatsAppClick}
-          className={`font-semibold rounded-lg px-8 py-4 text-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-2xl border-2 hover:scale-105 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)] flex items-center gap-3 ${
-            isDarkBackground
-              ? 'bg-white/10 border-white/40 hover:bg-white/20 hover:border-white/60 focus:ring-white/50 !text-white'
-              : 'bg-gray-900/10 border-gray-900/40 hover:bg-gray-900/20 hover:border-gray-900/60 focus:ring-gray-900/50 !text-gray-900'
-          }`}
-        >
-          <svg 
-            className="w-6 h-6" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2"
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-          {translations.ctaButton || "Let's Chat!"}
-        </button>
-      </div>
+      <FloatingContactMenu
+        isVisible={isButtonVisible}
+        isDarkBackground={isDarkBackground}
+        translations={translations}
+      />
     </header>
   );
 };
