@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Button from '@/components/Button';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslation } from '@/lib/i18n';
@@ -27,54 +28,99 @@ import { useScroll } from '@/lib/scrollContext';
 const Navigation: React.FC = () => {
   const { t } = useTranslation();
   const { isVisible } = useScroll();
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkBackground, setIsDarkBackground] = useState(true);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const firstFocusableElementRef = useRef<HTMLAnchorElement>(null);
 
-  // Detect background color based on where the right-side nav links are positioned
+  // Helper function to check if a link is active
+  const isActiveLink = (path: string) => {
+    // Remove locale prefix from pathname for comparison
+    const cleanPathname = pathname?.replace(/^\/(en|es)/, '') || '/';
+    
+    if (path === '/') {
+      return cleanPathname === '/' || cleanPathname === '';
+    }
+    return cleanPathname.startsWith(path);
+  };
+
+  // Detect background color based on which section is behind the navbar
   useEffect(() => {
     const checkBackground = () => {
-      const scrollY = window.scrollY;
-      const viewportHeight = window.innerHeight;
+      // Check if we're on the About page
+      const cleanPathname = pathname?.replace(/^\/(en|es)/, '') || '/';
+      const isAboutPage = cleanPathname.startsWith('/about');
       
-      // The nav links are on the right side of the navbar at the top of the viewport
-      // We check what section is behind the navbar (top ~80px of viewport)
-      // Since navbar is at top, we use scrollY to determine which section is visible
-      
-      // Section positions:
-      // Hero: 0 to 100vh (dark)
-      // Features: 100vh to ~120vh (light)
-      // Mission/Vision: ~200vh to 300vh (dark)
-      // Services sections: 300vh to ~900vh (white backgrounds)
-      // Why AGS: ~900vh to 1000vh (dark with image)
-      // Contact Form: ~1000vh+ (white)
-      // Footer: last section (black)
-      
-      const heroEnd = viewportHeight * 0.85;
-      const featuresEnd = viewportHeight * 1.85;
-      const missionEnd = viewportHeight * 2.85;
-      
-      if (scrollY < heroEnd) {
-        // In hero section - dark background
-        setIsDarkBackground(true);
-      } else if (scrollY < featuresEnd) {
-        // In features section - light background
-        setIsDarkBackground(false);
-      } else if (scrollY < missionEnd) {
-        // In mission/vision section - dark background
-        setIsDarkBackground(true);
+      if (isAboutPage) {
+        const scrollY = window.scrollY;
+        
+        // Get actual section positions
+        const sections = [
+          { element: document.querySelector('header'), isDark: true }, // Hero - white text
+          { element: document.querySelectorAll('section')[0], isDark: true }, // 4 Cards - white text
+          { element: document.querySelectorAll('section')[1], isDark: false }, // Timeline - black text
+          { element: document.querySelectorAll('section')[2], isDark: true }, // More in Depth - white text
+          { element: document.querySelectorAll('section')[3], isDark: false }, // Map - black text
+          { element: document.querySelectorAll('section')[4], isDark: true }, // Thanks to Partners - white text
+          { element: document.querySelectorAll('section')[5], isDark: false }, // Get in Touch - black text
+          { element: document.querySelector('footer'), isDark: true }, // Footer - white text
+        ];
+        
+        let currentIsDark = true; // Default to dark (hero)
+        
+        // Find which section we're currently in
+        for (let i = 0; i < sections.length; i++) {
+          const section = sections[i];
+          if (!section.element) continue;
+          
+          const rect = section.element.getBoundingClientRect();
+          const sectionTop = scrollY + rect.top;
+          const sectionBottom = sectionTop + rect.height;
+          
+          // Check if we're in this section (with some buffer for navbar)
+          if (scrollY + 40 >= sectionTop && scrollY + 40 < sectionBottom) {
+            currentIsDark = section.isDark;
+            break;
+          }
+        }
+        
+        setIsDarkBackground(currentIsDark);
       } else {
-        // All other sections (services, contact, footer) - mostly light/white backgrounds
-        setIsDarkBackground(false);
+        // Home page logic
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        
+        const heroEnd = viewportHeight * 0.85;
+        const featuresEnd = viewportHeight * 1.85;
+        const missionEnd = viewportHeight * 2.85;
+        
+        if (scrollY < heroEnd) {
+          setIsDarkBackground(true);
+        } else if (scrollY < featuresEnd) {
+          setIsDarkBackground(false);
+        } else if (scrollY < missionEnd) {
+          setIsDarkBackground(true);
+        } else {
+          setIsDarkBackground(false);
+        }
       }
     };
 
     checkBackground();
     window.addEventListener('scroll', checkBackground, { passive: true });
-    return () => window.removeEventListener('scroll', checkBackground);
-  }, []);
+    window.addEventListener('resize', checkBackground, { passive: true });
+    
+    // Also check after a short delay to ensure DOM is ready
+    const timer = setTimeout(checkBackground, 100);
+    
+    return () => {
+      window.removeEventListener('scroll', checkBackground);
+      window.removeEventListener('resize', checkBackground);
+      clearTimeout(timer);
+    };
+  }, [pathname]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -176,9 +222,21 @@ const Navigation: React.FC = () => {
           {/* Right Section - Navigation Links, Request Button and Language Selector (Desktop) */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
+              href="/"
+              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
+                isActiveLink('/') 
+                  ? 'text-brand-blue after:scale-x-100' 
+                  : `after:scale-x-0 hover:after:scale-x-100 ${isDarkBackground ? 'text-white hover:text-brand-blue' : 'text-gray-900 hover:text-brand-blue'}`
+              }`}
+            >
+              {t('navigation.home')}
+            </Link>
+            <Link
               href="/about"
-              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
-                isDarkBackground ? 'text-white hover:text-brand-blue' : 'text-gray-900 hover:text-brand-blue'
+              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
+                isActiveLink('/about') 
+                  ? 'text-brand-blue after:scale-x-100' 
+                  : `after:scale-x-0 hover:after:scale-x-100 ${isDarkBackground ? 'text-white hover:text-brand-blue' : 'text-gray-900 hover:text-brand-blue'}`
               }`}
             >
               {t('navigation.aboutUs')}
@@ -266,9 +324,25 @@ const Navigation: React.FC = () => {
           <div className="flex flex-col space-y-4">
             <Link
               ref={firstFocusableElementRef}
+              href="/"
+              onClick={closeMobileMenu}
+              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-3 py-2 text-base relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out bg-white/20 hover:bg-white/40 ${
+                isActiveLink('/') 
+                  ? 'text-brand-blue after:scale-x-100' 
+                  : 'text-gray-800 hover:text-brand-blue after:scale-x-0 hover:after:scale-x-100'
+              }`}
+              tabIndex={isMobileMenuOpen ? 0 : -1}
+            >
+              {t('navigation.home')}
+            </Link>
+            <Link
               href="/about"
               onClick={closeMobileMenu}
-              className="text-gray-800 hover:text-brand-blue font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-3 py-2 text-base relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-in-out bg-white/20 hover:bg-white/40"
+              className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-3 py-2 text-base relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out bg-white/20 hover:bg-white/40 ${
+                isActiveLink('/about') 
+                  ? 'text-brand-blue after:scale-x-100' 
+                  : 'text-gray-800 hover:text-brand-blue after:scale-x-0 hover:after:scale-x-100'
+              }`}
               tabIndex={isMobileMenuOpen ? 0 : -1}
             >
               {t('navigation.aboutUs')}

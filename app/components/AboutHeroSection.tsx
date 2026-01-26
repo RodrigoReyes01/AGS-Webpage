@@ -23,21 +23,47 @@ const AboutHeroSection: React.FC = () => {
   const { isVisible: isButtonVisible } = useScroll();
   const [isDarkBackground, setIsDarkBackground] = useState(true);
 
-  // Detect background color for floating button
+  // Detect background color for floating button (bottom right corner)
   useEffect(() => {
     const checkBackground = () => {
       const scrollY = window.scrollY;
       const viewportHeight = window.innerHeight;
       
-      // About page has gradient hero, then likely white sections
-      // Hero: 0 to 100vh (dark/gradient)
-      const heroEnd = viewportHeight * 0.9;
+      // The floating button is at the bottom right, so check that position
+      // Button is typically at bottom: 24px, so check at viewport bottom - 100px
+      const buttonVerticalPosition = scrollY + viewportHeight - 100;
       
-      if (scrollY < heroEnd) {
-        setIsDarkBackground(true);
-      } else {
-        setIsDarkBackground(false);
+      // Get actual section positions
+      const sections = [
+        { element: document.querySelector('header'), isDark: true }, // Hero - white text
+        { element: document.querySelectorAll('section')[0], isDark: true }, // 4 Cards - white text
+        { element: document.querySelectorAll('section')[1], isDark: false }, // Timeline - black text
+        { element: document.querySelectorAll('section')[2], isDark: true }, // More in Depth - white text
+        { element: document.querySelectorAll('section')[3], isDark: false }, // Map - black text
+        { element: document.querySelectorAll('section')[4], isDark: true }, // Thanks to Partners - white text
+        { element: document.querySelectorAll('section')[5], isDark: false }, // Get in Touch - black text
+        { element: document.querySelector('footer'), isDark: true }, // Footer - white text
+      ];
+      
+      let currentIsDark = true; // Default to dark (hero)
+      
+      // Find which section the button is currently over
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        if (!section.element) continue;
+        
+        const rect = section.element.getBoundingClientRect();
+        const sectionTop = scrollY + rect.top;
+        const sectionBottom = sectionTop + rect.height;
+        
+        // Check if the button position is in this section
+        if (buttonVerticalPosition >= sectionTop && buttonVerticalPosition < sectionBottom) {
+          currentIsDark = section.isDark;
+          break;
+        }
       }
+      
+      setIsDarkBackground(currentIsDark);
     };
 
     checkBackground();

@@ -50,45 +50,70 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     const checkBackground = () => {
       const scrollY = window.scrollY;
       const viewportHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
       
-      // Button is at bottom-right, so we check what section is at the bottom of viewport
-      // We need to add viewportHeight to scrollY to get the bottom position
-      const bottomPosition = scrollY + viewportHeight;
+      // The floating button is at the bottom right, so check that position
+      // Button is typically at bottom: 24px, so check at viewport bottom - 100px
+      const buttonVerticalPosition = scrollY + viewportHeight - 100;
       
-      // Calculate approximate section positions
-      // Hero: 0 to 100vh (dark)
-      // Features: 100vh to ~120vh (light)
-      // Mission/Vision: ~200vh to 300vh (dark)
-      // Services sections: 300vh to ~900vh (white backgrounds)
-      // Why AGS: ~900vh to 1000vh (dark with image)
-      // Contact Form: ~1000vh+ (white)
-      // Footer: last section (black)
+      // Get all sections on the home page
+      const sections = document.querySelectorAll('main > *');
+      let currentIsDark = true; // Default to dark (hero)
       
-      const heroEnd = viewportHeight * 1.1;
-      const featuresEnd = viewportHeight * 1.3;
-      const missionEnd = viewportHeight * 2.1;
-      
-      // Check if we're near the bottom (footer area)
-      const distanceFromBottom = documentHeight - bottomPosition;
-      const isNearFooter = distanceFromBottom < viewportHeight * 0.3; // Within 30% of viewport height from bottom
-      
-      if (isNearFooter) {
-        // In footer section - black background
-        setIsDarkBackground(true);
-      } else if (bottomPosition < heroEnd) {
-        // In hero section - dark background
-        setIsDarkBackground(true);
-      } else if (bottomPosition < featuresEnd) {
-        // In features section - light background
-        setIsDarkBackground(false);
-      } else if (bottomPosition < missionEnd) {
-        // In mission/vision section - dark background
-        setIsDarkBackground(true);
-      } else {
-        // All other sections (services, contact) - light/white background
-        setIsDarkBackground(false);
+      // Find which section the button is currently over
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = scrollY + rect.top;
+        const sectionBottom = sectionTop + rect.height;
+        
+        // Check if the button position is in this section
+        if (buttonVerticalPosition >= sectionTop && buttonVerticalPosition < sectionBottom) {
+          // Check the background color of this section
+          const bgColor = window.getComputedStyle(section).backgroundColor;
+          const classList = section.className;
+          
+          // Check for explicit dark/light classes
+          if (classList.includes('bg-black')) {
+            currentIsDark = true;
+            break;
+          } else if (classList.includes('bg-white')) {
+            currentIsDark = false;
+            break;
+          }
+          
+          // Check if background is transparent
+          if (bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'transparent') {
+            currentIsDark = false;
+            break;
+          }
+          
+          // Parse RGB values to determine brightness
+          const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+          if (rgbMatch) {
+            const r = parseInt(rgbMatch[1]);
+            const g = parseInt(rgbMatch[2]);
+            const b = parseInt(rgbMatch[3]);
+            
+            // Calculate brightness (perceived luminance)
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            
+            // If brightness is low (dark background), use white text
+            currentIsDark = brightness < 128;
+          }
+          
+          // Check for background images with dark overlays
+          const hasBackgroundImage = window.getComputedStyle(section).backgroundImage !== 'none';
+          if (hasBackgroundImage) {
+            const overlay = section.querySelector('[class*="bg-black"], [class*="bg-opacity"]');
+            if (overlay) {
+              currentIsDark = true;
+            }
+          }
+          
+          break;
+        }
       }
+      
+      setIsDarkBackground(currentIsDark);
     };
 
     checkBackground();
