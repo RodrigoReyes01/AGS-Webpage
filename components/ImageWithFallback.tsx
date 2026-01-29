@@ -32,6 +32,17 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
+  // Safari fallback: Force show image after 3 seconds if still loading
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (isLoading) {
+        setIsLoading(false);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
   const handleError = () => {
     console.warn(`Failed to load image: ${imgSrc}`);
     setHasError(true);
