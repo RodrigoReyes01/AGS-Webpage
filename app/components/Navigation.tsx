@@ -37,6 +37,15 @@ const Navigation: React.FC = () => {
 
   // Get the base path with locale for static export
   const getLocalePath = (path: string) => {
+    // For English home page, use root
+    if (locale === 'en' && path === '/') {
+      return '/';
+    }
+    // For other English pages, use /en/ prefix
+    if (locale === 'en' && path !== '/') {
+      return `/en${path}`;
+    }
+    // For Spanish, always use /es/ prefix
     return `/${locale}${path === '/' ? '' : path}`;
   };
 
