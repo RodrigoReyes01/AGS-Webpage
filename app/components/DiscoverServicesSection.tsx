@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const DiscoverServicesSection: React.FC = () => {
   const { t } = useTranslation();
@@ -44,15 +44,13 @@ const DiscoverServicesSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ImageWithFallback
-            src="/images/DiscoverServices.jpg"
+          <ResponsiveImage
+            src="DiscoverServices"
             alt="Aviation Ground Solutions - Discover Our Services"
             fill
             priority
-            quality={85}
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
-            showLoadingPlaceholder={false}
           />
         </div>
       </div>

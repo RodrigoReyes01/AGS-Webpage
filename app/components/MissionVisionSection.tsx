@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 /**
  * MissionVisionSection component
@@ -147,15 +147,13 @@ const MissionVisionSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ImageWithFallback
-            src="/images/MissionVision.jpg"
+          <ResponsiveImage
+            src="MissionVision"
             alt="Aviation Ground Solutions - Mission and Vision"
             fill
             priority
-            quality={85}
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
-            showLoadingPlaceholder={false}
           />
         </div>
       </div>

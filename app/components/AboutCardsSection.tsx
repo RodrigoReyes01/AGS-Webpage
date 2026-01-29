@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { useTranslation } from '@/lib/i18n';
 
 /**
@@ -60,14 +60,12 @@ const AboutCardsSection: React.FC = () => {
     <section className="relative w-full py-16 md:py-24 overflow-hidden">
       {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0 z-0">
-        <ImageWithFallback
-          src="/images/about-cards-bg.jpg"
+        <ResponsiveImage
+          src="about-cards-bg"
           alt="Aviation background"
           fill
-          quality={70}
           sizes="100vw"
           className="object-cover"
-          showLoadingPlaceholder={false}
         />
         {/* Dark dimming overlay */}
         <div className="absolute inset-0 bg-black/70" />

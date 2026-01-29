@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 /**
  * FuelServicesSection component
@@ -83,15 +83,13 @@ const FuelServicesSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ImageWithFallback
-            src="/images/FuelService.jpg"
+          <ResponsiveImage
+            src="FuelService"
             alt="Aviation Ground Solutions - Fuel Services"
             fill
             priority
-            quality={85}
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
-            showLoadingPlaceholder={false}
           />
         </div>
       </div>

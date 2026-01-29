@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import Button from '@/components/Button';
 import { useScroll } from '@/lib/scrollContext';
 import FloatingContactMenu from './FloatingContactMenu';
@@ -40,7 +40,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     subheading: 'Your premier FBO ground service from Belize to Panama',
     ctaButton: "Let's Chat!",
   },
-  backgroundImage = '/images/hero.jpg',
+  backgroundImage = 'hero',
 }) => {
   const { isVisible: isButtonVisible } = useScroll();
   const [isDarkBackground, setIsDarkBackground] = React.useState(true);
@@ -163,15 +163,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     <header className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <ImageWithFallback
+        <ResponsiveImage
           src={backgroundImage}
           alt="Aviation Ground Solutions - Aircraft on tarmac"
           fill
           priority
-          quality={75}
           sizes="100vw"
           className="object-cover"
-          showLoadingPlaceholder={false}
         />
         {/* Dark Overlay for text readability */}
         <div className="absolute inset-0 bg-black bg-opacity-50" />

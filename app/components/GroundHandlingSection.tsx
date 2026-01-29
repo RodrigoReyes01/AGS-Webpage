@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 /**
  * GroundHandlingSection component
@@ -62,15 +62,13 @@ const GroundHandlingSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ImageWithFallback
-            src="/images/GroundHandling.jpg"
+          <ResponsiveImage
+            src="GroundHandling"
             alt="Aviation Ground Solutions - Ground Handling"
             fill
             priority
-            quality={85}
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
-            showLoadingPlaceholder={false}
           />
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import Link from 'next/link';
 
 const WhyAGSSection: React.FC = () => {
@@ -46,15 +46,13 @@ const WhyAGSSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ImageWithFallback
-            src="/images/DifferentApproach.jpg"
+          <ResponsiveImage
+            src="DifferentApproach"
             alt="Aviation Ground Solutions - Why Choose Us"
             fill
             priority
-            quality={85}
             sizes="100vw"
             className="object-cover object-top"
-            showLoadingPlaceholder={false}
           />
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import ImageWithFallback from '@/components/ImageWithFallback';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { useTranslation } from '@/lib/i18n';
 import { useScroll } from '@/lib/scrollContext';
 import FloatingContactMenu from './FloatingContactMenu';
@@ -88,16 +88,14 @@ const AboutHeroSection: React.FC = () => {
 
         {/* Airplane Silhouette - Right Side */}
         <div className="absolute inset-0 z-0">
-          <ImageWithFallback
-            src="/images/about-hero.jpg"
+          <ResponsiveImage
+            src="about-hero"
             alt="Aircraft silhouette"
             fill
             priority
-            quality={75}
             sizes="100vw"
             className="object-cover md:object-contain"
             style={{ objectPosition: 'bottom right' }}
-            showLoadingPlaceholder={false}
           />
         </div>
 
