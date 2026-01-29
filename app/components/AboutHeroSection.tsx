@@ -93,7 +93,7 @@ const AboutHeroSection: React.FC = () => {
             alt="Aircraft silhouette"
             fill
             priority
-            quality={90}
+            quality={75}
             sizes="100vw"
             className="object-cover md:object-contain"
             style={{ objectPosition: 'bottom right' }}

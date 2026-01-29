@@ -64,7 +64,7 @@ const AboutCardsSection: React.FC = () => {
           src="/images/about-cards-bg.png"
           alt="Aviation background"
           fill
-          quality={85}
+          quality={70}
           sizes="100vw"
           className="object-cover"
           showLoadingPlaceholder={false}

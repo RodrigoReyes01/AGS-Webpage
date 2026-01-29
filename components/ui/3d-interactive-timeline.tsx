@@ -47,7 +47,7 @@ const TimelineItem: React.FC<{
 }> = ({ event, index, accentColor, primaryColor, activeEvent, setActiveEvent }) => {
   const [ref, inView] = useInView({
     threshold: 0.3,
-    triggerOnce: false,
+    triggerOnce: true, // Changed to true for better performance
   });
 
   const controls = useAnimation();

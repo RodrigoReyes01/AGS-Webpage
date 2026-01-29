@@ -168,10 +168,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           alt="Aviation Ground Solutions - Aircraft on tarmac"
           fill
           priority
-          quality={85}
+          quality={75}
           sizes="100vw"
           className="object-cover"
-          showLoadingPlaceholder={true}
+          showLoadingPlaceholder={false}
         />
         {/* Dark Overlay for text readability */}
         <div className="absolute inset-0 bg-black bg-opacity-50" />

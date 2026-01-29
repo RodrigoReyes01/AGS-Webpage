@@ -17,6 +17,7 @@ interface ImageWithFallbackProps extends Omit<ImageProps, 'onError' | 'onLoad'> 
  * - Shows fallback image if primary image fails to load
  * - Smooth fade-in transition when image loads
  * - Maintains all Next.js Image optimization features
+ * - Optimized for fast loading with reduced timeout
  * 
  * Requirements: 7.5
  */
@@ -24,21 +25,21 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
   alt,
   fallbackSrc = '/images/placeholder.svg',
-  showLoadingPlaceholder = true,
+  showLoadingPlaceholder = false, // Disabled by default for faster perceived load
   className = '',
   ...props
 }) => {
   const [imgSrc, setImgSrc] = useState(src);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Start as loaded for faster display
   const [hasError, setHasError] = useState(false);
 
-  // Safari fallback: Force show image after 3 seconds if still loading
+  // Reduced timeout for faster display
   React.useEffect(() => {
     const timer = setTimeout(() => {
       if (isLoading) {
         setIsLoading(false);
       }
-    }, 3000);
+    }, 1000); // Reduced from 3s to 1s
 
     return () => clearTimeout(timer);
   }, [isLoading]);
@@ -120,9 +121,10 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       <Image
         src={imgSrc}
         alt={alt}
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+        className={`${className} transition-opacity duration-200`}
         onError={handleError}
         onLoad={handleLoad}
+        loading="eager"
         {...props}
       />
     </>
