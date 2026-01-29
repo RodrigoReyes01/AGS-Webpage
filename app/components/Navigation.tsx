@@ -220,16 +220,22 @@ const Navigation: React.FC = () => {
           {/* Logo Section - Left */}
           <div className="flex-shrink-0">
             <Link href={getLocalePath('/')} className="flex items-center">
-              <ImageWithFallback
-                src="/images/logo.png"
-                alt="Aviation Ground Solutions Logo"
-                width={180}
-                height={60}
-                priority
-                sizes="(max-width: 768px) 120px, 180px"
-                className="h-10 sm:h-12 w-auto"
-                showLoadingPlaceholder={false}
-              />
+              <picture>
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/logo-mobile.png"
+                />
+                <ImageWithFallback
+                  src="/images/logo.png"
+                  alt="Aviation Ground Solutions Logo"
+                  width={180}
+                  height={60}
+                  priority
+                  sizes="(max-width: 768px) 120px, 180px"
+                  className="h-10 sm:h-12 w-auto"
+                  showLoadingPlaceholder={false}
+                />
+              </picture>
             </Link>
           </div>
 

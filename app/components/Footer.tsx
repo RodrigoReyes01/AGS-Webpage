@@ -97,14 +97,20 @@ const Footer: React.FC = () => {
         {/* Bottom Section - Logo and Copyright */}
         <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between">
           <div className="mb-4 md:mb-0">
-            <ImageWithFallback
-              src="/images/logo.png"
-              alt="Aviation Ground Solutions Logo"
-              width={150}
-              height={50}
-              className="h-10 w-auto"
-              showLoadingPlaceholder={false}
-            />
+            <picture>
+              <source
+                media="(max-width: 768px)"
+                srcSet="/images/logo-mobile.png"
+              />
+              <ImageWithFallback
+                src="/images/logo.png"
+                alt="Aviation Ground Solutions Logo"
+                width={150}
+                height={50}
+                className="h-10 w-auto"
+                showLoadingPlaceholder={false}
+              />
+            </picture>
           </div>
           <p className="text-sm text-gray-400">
             © {new Date().getFullYear()} Aviation Ground Solutions. {t('footer.allRightsReserved')}

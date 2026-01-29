@@ -30,20 +30,10 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   ...props
 }) => {
   const [imgSrc, setImgSrc] = useState(src);
-  const [isLoading, setIsLoading] = useState(false); // Start as loaded for faster display
+  const [isLoading, setIsLoading] = useState(false); // Start as NOT loading
   const [hasError, setHasError] = useState(false);
 
-  // Reduced timeout for faster display
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isLoading) {
-        setIsLoading(false);
-      }
-    }, 1000); // Reduced from 3s to 1s
-
-    return () => clearTimeout(timer);
-  }, [isLoading]);
-
+  // No timeout needed - images load immediately
   const handleError = () => {
     console.warn(`Failed to load image: ${imgSrc}`);
     setHasError(true);
@@ -52,7 +42,6 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     // Try fallback image if available and not already using it
     if (fallbackSrc && imgSrc !== fallbackSrc) {
       setImgSrc(fallbackSrc);
-      setIsLoading(true);
       setHasError(false);
     }
   };
@@ -64,36 +53,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 
   return (
     <>
-      {/* Loading Placeholder */}
-      {isLoading && showLoadingPlaceholder && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center z-10">
-          <div className="text-gray-400">
-            <svg
-              className="w-12 h-12 animate-spin"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-          </div>
-        </div>
-      )}
-
-      {/* Error State */}
+      {/* Error State - only show if no fallback */}
       {hasError && !fallbackSrc && (
         <div className="absolute inset-0 bg-gray-100 flex items-center justify-center z-10">
           <div className="text-center text-gray-500">
@@ -117,11 +77,11 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
         </div>
       )}
 
-      {/* Actual Image */}
+      {/* Actual Image - no loading spinner */}
       <Image
         src={imgSrc}
         alt={alt}
-        className={`${className} transition-opacity duration-200`}
+        className={`${className}`}
         onError={handleError}
         onLoad={handleLoad}
         loading="eager"

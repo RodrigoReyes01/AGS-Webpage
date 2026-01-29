@@ -34,6 +34,42 @@ export default function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        {/* DNS Prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        
+        {/* Preconnect to critical origins */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        
+        {/* Preload critical mobile hero image */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/mobile/hero.webp"
+          media="(max-width: 768px)"
+          type="image/webp"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/tablet/hero.webp"
+          media="(min-width: 769px) and (max-width: 1280px)"
+          type="image/webp"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/desktop/hero.webp"
+          media="(min-width: 1281px)"
+          type="image/webp"
+        />
+        
+        {/* Optimize viewport for mobile */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        
+        {/* Theme color for mobile browsers */}
+        <meta name="theme-color" content="#0066CC" />
+      </head>
       <body>
         <ErrorBoundary>
           <I18nProvider initialLocale={locale}>
