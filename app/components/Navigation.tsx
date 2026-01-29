@@ -26,7 +26,7 @@ import { useScroll } from '@/lib/scrollContext';
  * Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 2.4, 2.5, 7.3
  */
 const Navigation: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { isVisible } = useScroll();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -34,6 +34,11 @@ const Navigation: React.FC = () => {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const firstFocusableElementRef = useRef<HTMLAnchorElement>(null);
+
+  // Get the base path with locale for static export
+  const getLocalePath = (path: string) => {
+    return `/${locale}${path === '/' ? '' : path}`;
+  };
 
   // Helper function to check if a link is active
   const isActiveLink = (path: string) => {
@@ -205,7 +210,7 @@ const Navigation: React.FC = () => {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo Section - Left */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
+            <Link href={getLocalePath('/')} className="flex items-center">
               <ImageWithFallback
                 src="/images/logo.png"
                 alt="Aviation Ground Solutions Logo"
@@ -222,7 +227,7 @@ const Navigation: React.FC = () => {
           {/* Right Section - Navigation Links, Request Button and Language Selector (Desktop) */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
-              href="/"
+              href={getLocalePath('/')}
               className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
                 isActiveLink('/') 
                   ? 'text-brand-blue after:scale-x-100' 
@@ -232,7 +237,7 @@ const Navigation: React.FC = () => {
               {t('navigation.home')}
             </Link>
             <Link
-              href="/about"
+              href={getLocalePath('/about')}
               className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-2 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out drop-shadow-lg ${
                 isActiveLink('/about') 
                   ? 'text-brand-blue after:scale-x-100' 
@@ -324,7 +329,7 @@ const Navigation: React.FC = () => {
           <div className="flex flex-col space-y-4">
             <Link
               ref={firstFocusableElementRef}
-              href="/"
+              href={getLocalePath('/')}
               onClick={closeMobileMenu}
               className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-3 py-2 text-base relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out bg-white/20 hover:bg-white/40 ${
                 isActiveLink('/') 
@@ -336,7 +341,7 @@ const Navigation: React.FC = () => {
               {t('navigation.home')}
             </Link>
             <Link
-              href="/about"
+              href={getLocalePath('/about')}
               onClick={closeMobileMenu}
               className={`font-medium transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 rounded px-3 py-2 text-base relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-brand-blue after:transition-transform after:duration-300 after:ease-in-out bg-white/20 hover:bg-white/40 ${
                 isActiveLink('/about') 
