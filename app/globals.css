@@ -26,12 +26,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Reduce animations on mobile for better performance */
-@media (max-width: 768px) {
+/* Aggressive performance optimizations for mobile/tablet */
+@media (max-width: 1024px) {
   * {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
+  }
+  
+  /* Disable smooth scroll on mobile for instant response */
+  html {
+    scroll-behavior: auto !important;
+  }
+  
+  /* Optimize rendering */
+  img {
+    content-visibility: auto;
   }
 }
 

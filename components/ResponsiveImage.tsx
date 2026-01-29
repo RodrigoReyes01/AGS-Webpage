@@ -35,7 +35,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   fill = false,
   priority = false,
   className = '',
-  sizes = '(max-width: 768px) 768px, (max-width: 1280px) 1280px, 1920px',
+  sizes = '(max-width: 640px) 768px, (max-width: 1024px) 1280px, 1920px',
   quality = 85,
   style,
 }) => {
@@ -51,17 +51,17 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     return (
       <picture>
         <source
-          media="(max-width: 768px)"
+          media="(max-width: 640px)"
           srcSet={mobileSrc}
           type="image/webp"
         />
         <source
-          media="(max-width: 1280px)"
+          media="(max-width: 1024px)"
           srcSet={tabletSrc}
           type="image/webp"
         />
         <source
-          media="(min-width: 1281px)"
+          media="(min-width: 1025px)"
           srcSet={desktopSrc}
           type="image/webp"
         />
@@ -83,17 +83,17 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   return (
     <picture>
       <source
-        media="(max-width: 768px)"
+        media="(max-width: 640px)"
         srcSet={mobileSrc}
         type="image/webp"
       />
       <source
-        media="(max-width: 1280px)"
+        media="(max-width: 1024px)"
         srcSet={tabletSrc}
         type="image/webp"
       />
       <source
-        media="(min-width: 1281px)"
+        media="(min-width: 1025px)"
         srcSet={desktopSrc}
         type="image/webp"
       />

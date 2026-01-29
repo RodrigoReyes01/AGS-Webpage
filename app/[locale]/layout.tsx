@@ -65,10 +65,16 @@ export default function LocaleLayout({
         />
         
         {/* Optimize viewport for mobile */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
         
         {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#0066CC" />
+        
+        {/* Inline critical CSS for instant render */}
+        <style dangerouslySetInnerHTML={{__html: `
+          body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+          .hero-skeleton { width: 100%; height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        `}} />
       </head>
       <body>
         <ErrorBoundary>
