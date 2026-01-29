@@ -148,7 +148,7 @@ const MissionVisionSection: React.FC = () => {
           }}
         >
           <ImageWithFallback
-            src="/images/MissionVision.png"
+            src="/images/MissionVision.jpg"
             alt="Aviation Ground Solutions - Mission and Vision"
             fill
             priority

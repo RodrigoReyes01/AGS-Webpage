@@ -89,7 +89,7 @@ const AboutHeroSection: React.FC = () => {
         {/* Airplane Silhouette - Right Side */}
         <div className="absolute inset-0 z-0">
           <ImageWithFallback
-            src="/images/about-hero.png"
+            src="/images/about-hero.jpg"
             alt="Aircraft silhouette"
             fill
             priority

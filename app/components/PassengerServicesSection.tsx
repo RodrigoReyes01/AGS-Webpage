@@ -63,7 +63,7 @@ const PassengerServicesSection: React.FC = () => {
           }}
         >
           <ImageWithFallback
-            src="/images/PassengerServices.png"
+            src="/images/PassengerServices.jpg"
             alt="Aviation Ground Solutions - Passenger Services"
             fill
             priority

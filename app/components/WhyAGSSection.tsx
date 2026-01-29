@@ -47,7 +47,7 @@ const WhyAGSSection: React.FC = () => {
           }}
         >
           <ImageWithFallback
-            src="/images/DifferentApproach.png"
+            src="/images/DifferentApproach.jpg"
             alt="Aviation Ground Solutions - Why Choose Us"
             fill
             priority

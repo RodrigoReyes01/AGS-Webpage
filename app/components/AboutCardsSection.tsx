@@ -61,7 +61,7 @@ const AboutCardsSection: React.FC = () => {
       {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0 z-0">
         <ImageWithFallback
-          src="/images/about-cards-bg.png"
+          src="/images/about-cards-bg.jpg"
           alt="Aviation background"
           fill
           quality={70}

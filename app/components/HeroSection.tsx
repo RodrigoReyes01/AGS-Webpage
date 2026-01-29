@@ -40,7 +40,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     subheading: 'Your premier FBO ground service from Belize to Panama',
     ctaButton: "Let's Chat!",
   },
-  backgroundImage = '/images/hero.png',
+  backgroundImage = '/images/hero.jpg',
 }) => {
   const { isVisible: isButtonVisible } = useScroll();
   const [isDarkBackground, setIsDarkBackground] = React.useState(true);

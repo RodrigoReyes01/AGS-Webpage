@@ -63,7 +63,7 @@ const GroundHandlingSection: React.FC = () => {
           }}
         >
           <ImageWithFallback
-            src="/images/GroundHandling.png"
+            src="/images/GroundHandling.jpg"
             alt="Aviation Ground Solutions - Ground Handling"
             fill
             priority

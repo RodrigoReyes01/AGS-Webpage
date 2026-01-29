@@ -45,7 +45,7 @@ const DiscoverServicesSection: React.FC = () => {
           }}
         >
           <ImageWithFallback
-            src="/images/DiscoverServices.png"
+            src="/images/DiscoverServices.jpg"
             alt="Aviation Ground Solutions - Discover Our Services"
             fill
             priority

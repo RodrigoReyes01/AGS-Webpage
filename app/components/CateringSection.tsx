@@ -84,7 +84,7 @@ const CateringSection: React.FC = () => {
           }}
         >
           <ImageWithFallback
-            src="/images/CateringServices.png"
+            src="/images/CateringServices.jpg"
             alt="Aviation Ground Solutions - Catering Coordination"
             fill
             priority
