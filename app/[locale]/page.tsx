@@ -1,23 +1,20 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useTranslation } from '@/lib/i18n';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navigation from '@/app/components/Navigation';
 import HeroSection from '@/app/components/HeroSection';
+import FeaturesSection from '@/app/components/FeaturesSection';
+import MissionVisionSection from '@/app/components/MissionVisionSection';
+import ServicesSection from '@/app/components/ServicesSection';
+import PassengerServicesSection from '@/app/components/PassengerServicesSection';
+import CateringSection from '@/app/components/CateringSection';
+import GroundHandlingSection from '@/app/components/GroundHandlingSection';
+import FuelServicesSection from '@/app/components/FuelServicesSection';
+import DiscoverServicesSection from '@/app/components/DiscoverServicesSection';
+import WhyAGSSection from '@/app/components/WhyAGSSection';
+import ContactFormSection from '@/app/components/ContactFormSection';
 import Footer from '@/app/components/Footer';
-
-// Lazy load ALL sections below the fold
-const FeaturesSection = dynamic(() => import('@/app/components/FeaturesSection'));
-const MissionVisionSection = dynamic(() => import('@/app/components/MissionVisionSection'));
-const ServicesSection = dynamic(() => import('@/app/components/ServicesSection'));
-const PassengerServicesSection = dynamic(() => import('@/app/components/PassengerServicesSection'));
-const CateringSection = dynamic(() => import('@/app/components/CateringSection'));
-const GroundHandlingSection = dynamic(() => import('@/app/components/GroundHandlingSection'));
-const FuelServicesSection = dynamic(() => import('@/app/components/FuelServicesSection'));
-const DiscoverServicesSection = dynamic(() => import('@/app/components/DiscoverServicesSection'));
-const WhyAGSSection = dynamic(() => import('@/app/components/WhyAGSSection'));
-const ContactFormSection = dynamic(() => import('@/app/components/ContactFormSection'));
 
 export default function Home() {
   const { t, locale } = useTranslation();

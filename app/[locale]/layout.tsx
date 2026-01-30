@@ -84,6 +84,22 @@ export default function LocaleLayout({
           fetchPriority="high"
         />
         
+        {/* Preload first few section images for mobile */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/mobile/MissionVision.webp"
+          media="(max-width: 640px)"
+          type="image/webp"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/mobile/CargoServices.webp"
+          media="(max-width: 640px)"
+          type="image/webp"
+        />
+        
         {/* Inline critical CSS - Animations on desktop, disabled on mobile */}
         <style dangerouslySetInnerHTML={{__html: `
           * { margin: 0; padding: 0; box-sizing: border-box; }

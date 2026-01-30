@@ -1,36 +1,23 @@
 import React from 'react';
-import Image from 'next/image';
 
-interface ResponsiveImageProps {
+interface SimpleResponsiveImageProps {
   src: string; // Base name without path (e.g., "hero")
   alt: string;
   fill?: boolean;
   priority?: boolean;
   className?: string;
-  sizes?: string;
-  quality?: number;
-  style?: React.CSSProperties;
 }
 
 /**
- * ResponsiveImage component - Server Component
- * Mobile-first responsive images with srcset
- * 
- * Features:
- * - Native lazy loading (loading="lazy")
- * - WebP format for modern browsers
- * - Responsive breakpoints
- * - Optimized for performance
+ * SimpleResponsiveImage - Plain HTML implementation
+ * Works better with static export than Next.js Image
  */
-const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
+const SimpleResponsiveImage: React.FC<SimpleResponsiveImageProps> = ({
   src,
   alt,
   fill = false,
   priority = false,
   className = '',
-  sizes = '(max-width: 640px) 480px, (max-width: 1024px) 1024px, 1920px',
-  quality = 85,
-  style,
 }) => {
   // Extract image name from src (remove /images/ prefix and extension)
   const imageName = src.replace('/images/', '').replace(/\.(jpg|png|webp)$/, '');
@@ -42,7 +29,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
 
   if (fill) {
     return (
-      <picture>
+      <picture className={className}>
         <source
           media="(max-width: 640px)"
           srcSet={mobileSrc}
@@ -58,25 +45,27 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
           srcSet={desktopSrc}
           type="image/webp"
         />
-        <Image
+        <img
           src={desktopSrc}
           alt={alt}
-          fill
-          priority={priority}
-          quality={quality}
-          sizes={sizes}
-          className={className}
-          style={style}
           loading={priority ? 'eager' : 'lazy'}
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlZWUiLz48L3N2Zz4="
+          style={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            objectFit: 'cover',
+          }}
         />
       </picture>
     );
   }
 
   return (
-    <picture>
+    <picture className={className}>
       <source
         media="(max-width: 640px)"
         srcSet={mobileSrc}
@@ -92,22 +81,16 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
         srcSet={desktopSrc}
         type="image/webp"
       />
-      <Image
+      <img
         src={desktopSrc}
         alt={alt}
-        priority={priority}
-        quality={quality}
-        sizes={sizes}
-        className={className}
-        style={style}
         loading={priority ? 'eager' : 'lazy'}
-        width={1920}
-        height={1080}
-        placeholder="blur"
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlZWUiLz48L3N2Zz4="
+        width="1920"
+        height="1080"
+        style={{ maxWidth: '100%', height: 'auto' }}
       />
     </picture>
   );
 };
 
-export default ResponsiveImage;
+export default SimpleResponsiveImage;

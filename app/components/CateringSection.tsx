@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ResponsiveImage from '@/components/ResponsiveImage';
+import SimpleResponsiveImage from '@/components/SimpleResponsiveImage';
 
 /**
  * CateringSection component
@@ -83,13 +83,11 @@ const CateringSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ResponsiveImage
+          <SimpleResponsiveImage
             src="CateringServices"
             alt="Aviation Ground Solutions - Catering Coordination"
             fill
             priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
           />
         </div>
       </div>

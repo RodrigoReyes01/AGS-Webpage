@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/i18n';
-import ResponsiveImage from '@/components/ResponsiveImage';
+import SimpleResponsiveImage from '@/components/SimpleResponsiveImage';
 
 /**
  * PassengerServicesSection component
@@ -62,13 +62,11 @@ const PassengerServicesSection: React.FC = () => {
             height: '115%',
           }}
         >
-          <ResponsiveImage
+          <SimpleResponsiveImage
             src="PassengerServices"
             alt="Aviation Ground Solutions - Passenger Services"
             fill
             priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
           />
         </div>
       </div>
