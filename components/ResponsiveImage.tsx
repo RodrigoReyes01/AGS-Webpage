@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 
@@ -15,12 +13,12 @@ interface ResponsiveImageProps {
 }
 
 /**
- * ResponsiveImage component
+ * ResponsiveImage component - Server Component
  * Mobile-first responsive images with srcset
  * 
  * Automatically serves:
- * - Mobile (768px): ~50-80KB
- * - Tablet (1280px): ~80-120KB  
+ * - Mobile (480px): ~10-20KB
+ * - Tablet (1024px): ~30-60KB  
  * - Desktop (1920px): ~120-180KB
  * 
  * Features:
@@ -35,7 +33,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   fill = false,
   priority = false,
   className = '',
-  sizes = '(max-width: 640px) 768px, (max-width: 1024px) 1280px, 1920px',
+  sizes = '(max-width: 640px) 480px, (max-width: 1024px) 1024px, 1920px',
   quality = 85,
   style,
 }) => {
