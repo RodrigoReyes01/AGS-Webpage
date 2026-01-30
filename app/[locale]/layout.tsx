@@ -84,7 +84,7 @@ export default function LocaleLayout({
           fetchPriority="high"
         />
         
-        {/* Inline critical CSS for instant render - NO ANIMATIONS ON MOBILE */}
+        {/* Inline critical CSS - Animations on desktop, disabled on mobile */}
         <style dangerouslySetInnerHTML={{__html: `
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { 
@@ -93,13 +93,25 @@ export default function LocaleLayout({
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
           }
-          /* Disable ALL animations on mobile/tablet for instant response */
+          /* Desktop: Full animations enabled */
+          @media (min-width: 1025px) {
+            html {
+              scroll-behavior: smooth;
+            }
+          }
+          /* Mobile/Tablet: Disable ALL animations for instant response */
           @media (max-width: 1024px) {
             *, *::before, *::after {
-              animation-duration: 0.01ms !important;
+              animation-duration: 0s !important;
               animation-iteration-count: 1 !important;
-              transition-duration: 0.01ms !important;
+              transition-duration: 0s !important;
               scroll-behavior: auto !important;
+            }
+            html {
+              scroll-behavior: auto !important;
+            }
+            body {
+              text-rendering: optimizeSpeed;
             }
           }
           /* Hero skeleton for instant visual feedback */
@@ -107,6 +119,10 @@ export default function LocaleLayout({
             width: 100%; 
             height: 100vh; 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+          }
+          /* Optimize image rendering */
+          img {
+            content-visibility: auto;
           }
         `}} />
       </head>

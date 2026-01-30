@@ -26,7 +26,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Aggressive performance optimizations for mobile/tablet */
+/* PERFORMANCE MODE - Animations on desktop, disabled on mobile/tablet */
+
+/* Desktop: Full animations enabled (>1024px) */
+@media (min-width: 1025px) {
+  /* Allow normal animations on desktop */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Mobile/Tablet: Disable ALL animations for instant response */
 @media (max-width: 1024px) {
   * {
     animation-duration: 0s !important;
@@ -38,15 +48,18 @@ body {
   html {
     scroll-behavior: auto !important;
   }
-  
-  /* Optimize rendering */
-  img {
-    content-visibility: auto;
-  }
 }
 
-html {
-  scroll-behavior: smooth;
+/* Optimize rendering for all images */
+img {
+  content-visibility: auto;
+}
+
+/* Optimize fonts on mobile */
+@media (max-width: 1024px) {
+  body {
+    text-rendering: optimizeSpeed;
+  }
 }
 
 /* Ensure smooth scrolling for anchor links */
@@ -78,4 +91,23 @@ body {
 :focus-visible {
   outline: 2px solid var(--brand-blue);
   outline-offset: 2px;
+}
+
+
+/* DISABLE PARALLAX EFFECTS ON MOBILE/TABLET ONLY */
+@media (max-width: 1024px) {
+  /* Override all transform animations on mobile */
+  [style*="transform: translate3d"] {
+    transform: translate3d(0, 0px, 0) scale(1) !important;
+  }
+
+  /* Disable will-change to reduce GPU usage on mobile */
+  [style*="will-change"] {
+    will-change: auto !important;
+  }
+}
+
+/* Optimize all sections */
+section {
+  contain: layout style;
 }
