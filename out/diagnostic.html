@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGS - Diagnostic Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-section h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .status.pass {
+            background: #10b981;
+            color: white;
+        }
+        
+        .status.fail {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .status.warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .info strong {
+            color: #fbbf24;
+        }
+        
+        .image-test {
+            margin-top: 15px;
+        }
+        
+        .image-test img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 AGS Diagnostic Page</h1>
+        <p class="subtitle">Testing your browser and connection</p>
+        
+        <!-- Protocol Test -->
+        <div class="test-section">
+            <h2>
+                <span id="protocol-icon">⏳</span>
+                Protocol Test
+            </h2>
+            <div id="protocol-result" class="info">
+                <div class="loading"></div> Testing...
+            </div>
+        </div>
+        
+        <!-- WebP Support Test -->
+        <div class="test-section">
+            <h2>
+                <span id="webp-icon">⏳</span>
+                WebP Support
+            </h2>
+            <div id="webp-result" class="info">
+                <div class="loading"></div> Testing...
+            </div>
+        </div>
+        
+        <!-- JavaScript Test -->
+        <div class="test-section">
+            <h2>
+                <span id="js-icon">✅</span>
+                JavaScript
+            </h2>
+            <div class="info">
+                <strong>Status:</strong> <span class="status pass">WORKING</span><br>
+                JavaScript is enabled and executing properly.
+            </div>
+        </div>
+        
+        <!-- Screen Size Test -->
+        <div class="test-section">
+            <h2>
+                <span id="screen-icon">⏳</span>
+                Screen Information
+            </h2>
+            <div id="screen-result" class="info">
+                <div class="loading"></div> Detecting...
+            </div>
+        </div>
+        
+        <!-- Image Loading Test -->
+        <div class="test-section">
+            <h2>
+                <span id="image-icon">⏳</span>
+                Image Loading Test
+            </h2>
+            <div id="image-result" class="info">
+                <div class="loading"></div> Testing...
+            </div>
+            <div class="image-test">
+                <picture id="test-picture">
+                    <source media="(max-width: 640px)" srcset="/images/mobile/hero.webp" type="image/webp">
+                    <source media="(max-width: 1024px)" srcset="/images/tablet/hero.webp" type="image/webp">
+                    <source media="(min-width: 1025px)" srcset="/images/desktop/hero.webp" type="image/webp">
+                    <img id="test-image" src="/images/desktop/hero.webp" alt="Test Image" style="display: none;">
+                </picture>
+            </div>
+        </div>
+        
+        <!-- Browser Info -->
+        <div class="test-section">
+            <h2>
+                <span>ℹ️</span>
+                Browser Information
+            </h2>
+            <div id="browser-result" class="info">
+                <div class="loading"></div> Detecting...
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="actions">
+            <a href="/en.html" class="button">← Back to Home Page</a>
+            <a href="/" class="button">Try Index</a>
+        </div>
+    </div>
+    
+    <script>
+        // Protocol Test
+        function testProtocol() {
+            const protocol = window.location.protocol;
+            const icon = document.getElementById('protocol-icon');
+            const result = document.getElementById('protocol-result');
+            
+            if (protocol === 'file:') {
+                icon.textContent = '❌';
+                result.innerHTML = `
+                    <strong>Status:</strong> <span class="status fail">FAILED</span><br>
+                    <strong>Protocol:</strong> ${protocol}<br>
+                    <strong>Problem:</strong> You're opening the file directly!<br>
+                    <strong>Solution:</strong> Use a web server:<br>
+                    <code>./serve-local.sh</code> or deploy to Netlify
+                `;
+            } else if (protocol === 'http:' || protocol === 'https:') {
+                icon.textContent = '✅';
+                result.innerHTML = `
+                    <strong>Status:</strong> <span class="status pass">PASSED</span><br>
+                    <strong>Protocol:</strong> ${protocol}<br>
+                    <strong>URL:</strong> ${window.location.href}<br>
+                    This is correct! You're using a web server.
+                `;
+            } else {
+                icon.textContent = '⚠️';
+                result.innerHTML = `
+                    <strong>Status:</strong> <span class="status warning">UNKNOWN</span><br>
+                    <strong>Protocol:</strong> ${protocol}<br>
+                    Unexpected protocol detected.
+                `;
+            }
+        }
+        
+        // WebP Support Test
+        function testWebP() {
+            const icon = document.getElementById('webp-icon');
+            const result = document.getElementById('webp-result');
+            
+            const elem = document.createElement('canvas');
+            if (!!(elem.getContext && elem.getContext('2d'))) {
+                const supported = elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+                
+                if (supported) {
+                    icon.textContent = '✅';
+                    result.innerHTML = `
+                        <strong>Status:</strong> <span class="status pass">SUPPORTED</span><br>
+                        Your browser supports WebP images.<br>
+                        All optimized images will load correctly.
+                    `;
+                } else {
+                    icon.textContent = '❌';
+                    result.innerHTML = `
+                        <strong>Status:</strong> <span class="status fail">NOT SUPPORTED</span><br>
+                        Your browser doesn't support WebP images.<br>
+                        <strong>Solution:</strong> Update your browser or use Chrome/Safari.
+                    `;
+                }
+            } else {
+                icon.textContent = '❌';
+                result.innerHTML = `
+                    <strong>Status:</strong> <span class="status fail">CANVAS NOT SUPPORTED</span><br>
+                    Your browser is very outdated.
+                `;
+            }
+        }
+        
+        // Screen Size Test
+        function testScreen() {
+            const icon = document.getElementById('screen-icon');
+            const result = document.getElementById('screen-result');
+            
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const devicePixelRatio = window.devicePixelRatio || 1;
+            
+            let deviceType = 'Desktop';
+            let imageSize = 'desktop (1920px)';
+            
+            if (width <= 640) {
+                deviceType = 'Mobile';
+                imageSize = 'mobile (480px)';
+            } else if (width <= 1024) {
+                deviceType = 'Tablet';
+                imageSize = 'tablet (1024px)';
+            }
+            
+            icon.textContent = '📱';
+            result.innerHTML = `
+                <strong>Device Type:</strong> ${deviceType}<br>
+                <strong>Screen Width:</strong> ${width}px<br>
+                <strong>Screen Height:</strong> ${height}px<br>
+                <strong>Pixel Ratio:</strong> ${devicePixelRatio}x<br>
+                <strong>Images Loading:</strong> ${imageSize}
+            `;
+        }
+        
+        // Image Loading Test
+        function testImage() {
+            const icon = document.getElementById('image-icon');
+            const result = document.getElementById('image-result');
+            const img = document.getElementById('test-image');
+            
+            let startTime = Date.now();
+            
+            img.onload = function() {
+                const loadTime = Date.now() - startTime;
+                icon.textContent = '✅';
+                result.innerHTML = `
+                    <strong>Status:</strong> <span class="status pass">LOADED</span><br>
+                    <strong>Load Time:</strong> ${loadTime}ms<br>
+                    <strong>Image Size:</strong> ${img.naturalWidth}x${img.naturalHeight}px<br>
+                    <strong>Source:</strong> ${img.currentSrc || img.src}
+                `;
+                img.style.display = 'block';
+            };
+            
+            img.onerror = function() {
+                icon.textContent = '❌';
+                result.innerHTML = `
+                    <strong>Status:</strong> <span class="status fail">FAILED TO LOAD</span><br>
+                    <strong>Problem:</strong> Image could not be loaded<br>
+                    <strong>Possible Causes:</strong><br>
+                    - Using file:// protocol (use web server)<br>
+                    - Image file missing<br>
+                    - Network error<br>
+                    - CORS policy blocking
+                `;
+            };
+            
+            // Trigger load
+            img.src = img.src;
+        }
+        
+        // Browser Info
+        function getBrowserInfo() {
+            const result = document.getElementById('browser-result');
+            const ua = navigator.userAgent;
+            
+            let browserName = 'Unknown';
+            let browserVersion = 'Unknown';
+            
+            if (ua.indexOf('Firefox') > -1) {
+                browserName = 'Firefox';
+                browserVersion = ua.match(/Firefox\/(\d+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Chrome') > -1) {
+                browserName = 'Chrome';
+                browserVersion = ua.match(/Chrome\/(\d+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Safari') > -1) {
+                browserName = 'Safari';
+                browserVersion = ua.match(/Version\/(\d+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Edge') > -1) {
+                browserName = 'Edge';
+                browserVersion = ua.match(/Edge\/(\d+)/)?.[1] || 'Unknown';
+            }
+            
+            const platform = navigator.platform;
+            const language = navigator.language;
+            
+            result.innerHTML = `
+                <strong>Browser:</strong> ${browserName} ${browserVersion}<br>
+                <strong>Platform:</strong> ${platform}<br>
+                <strong>Language:</strong> ${language}<br>
+                <strong>User Agent:</strong><br>
+                <div style="word-break: break-all; margin-top: 5px; opacity: 0.8; font-size: 12px;">
+                    ${ua}
+                </div>
+            `;
+        }
+        
+        // Run all tests
+        window.addEventListener('load', function() {
+            testProtocol();
+            testWebP();
+            testScreen();
+            testImage();
+            getBrowserInfo();
+        });
+        
+        // Update screen info on resize
+        window.addEventListener('resize', testScreen);
+    </script>
+</body>
+</html>
