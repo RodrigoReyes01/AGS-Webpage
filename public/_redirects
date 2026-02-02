@@ -1,11 +1,9 @@
 # Netlify redirects for static HTML routing
 
-# Root redirects to index.html
+# Root is English home (index.html)
 /  /index.html  200
 
-# English routes - redirect /en/ to /en.html
-/en  /en.html  200
-/en/  /en.html  200
+# English about page
 /en/about  /en/about.html  200
 
 # Spanish routes  
