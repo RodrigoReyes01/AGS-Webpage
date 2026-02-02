@@ -121,22 +121,27 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
       if (window.location && window.location.pathname) {
         const currentPath = window.location.pathname;
         
-        // Determine if we're on the about page
-        const isAboutPage = currentPath.includes('about');
+        // Remove .html extension and leading/trailing slashes for easier parsing
+        const cleanPath = currentPath.replace(/\.html$/, '').replace(/^\/|\/$/g, '');
+        
+        // Determine the page type (home or about)
+        // Check if path ends with 'about' or contains '/about'
+        const isAboutPage = cleanPath.endsWith('about') || cleanPath.includes('/about');
         
         // Build the new path for static export
+        // Use clean URLs (without .html) - Apache .htaccess will handle the rewrite
         let newPath;
         if (newLocale === 'en') {
           if (isAboutPage) {
-            newPath = '/en/about.html'; // English about page
+            newPath = '/en/about'; // English about page (Apache serves /en/about.html)
           } else {
-            newPath = '/'; // English home is at root (index.html)
+            newPath = '/'; // English home is at root (Apache serves index.html)
           }
         } else {
           if (isAboutPage) {
-            newPath = '/es/about.html'; // Spanish about page
+            newPath = '/es/about'; // Spanish about page (Apache serves /es/about.html)
           } else {
-            newPath = '/es.html'; // Spanish home
+            newPath = '/es'; // Spanish home (Apache serves es.html)
           }
         }
         
