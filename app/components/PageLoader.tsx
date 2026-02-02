@@ -14,8 +14,9 @@ export default function PageLoader({ children }: { children: React.ReactNode }) 
     if (document.readyState === 'complete') {
       setIsLoaded(true);
     } else {
-      window.addEventListener('load', () => setIsLoaded(true));
-      return () => window.removeEventListener('load', () => setIsLoaded(true));
+      const handleLoad = () => setIsLoaded(true);
+      window.addEventListener('load', handleLoad, { passive: true });
+      return () => window.removeEventListener('load', handleLoad);
     }
   }, []);
 

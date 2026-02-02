@@ -24,13 +24,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* PERFORMANCE MODE - Animations on desktop, disabled on mobile/tablet */
 
 /* Desktop: Full animations enabled (>1024px) */
 @media (min-width: 1025px) {
-  /* Allow normal animations on desktop */
   html {
     scroll-behavior: smooth;
   }
@@ -38,34 +38,30 @@ body {
 
 /* Mobile/Tablet: Disable ALL animations for instant response */
 @media (max-width: 1024px) {
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;
   }
   
-  /* Disable smooth scroll on mobile for instant response */
   html {
     scroll-behavior: auto !important;
   }
-}
-
-/* Optimize rendering for all images */
-img {
-  content-visibility: auto;
-}
-
-/* Optimize fonts on mobile */
-@media (max-width: 1024px) {
+  
   body {
     text-rendering: optimizeSpeed;
   }
-}
-
-/* Ensure smooth scrolling for anchor links */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
+  
+  /* Disable parallax effects on mobile */
+  [style*="transform: translate3d"] {
+    transform: translate3d(0, 0px, 0) scale(1) !important;
+  }
+  
+  /* Disable will-change to reduce GPU usage */
+  [style*="will-change"] {
+    will-change: auto !important;
   }
 }
 
@@ -77,14 +73,15 @@ img {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-/* Improve text rendering */
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Optimize image rendering */
+img {
+  content-visibility: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Focus visible for better keyboard navigation */
@@ -93,21 +90,67 @@ body {
   outline-offset: 2px;
 }
 
+/* Optimize all sections with containment */
+section {
+  contain: layout style;
+}
 
-/* DISABLE PARALLAX EFFECTS ON MOBILE/TABLET ONLY */
-@media (max-width: 1024px) {
-  /* Override all transform animations on mobile */
-  [style*="transform: translate3d"] {
-    transform: translate3d(0, 0px, 0) scale(1) !important;
+/* Utility classes for performance */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Loading states */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
   }
-
-  /* Disable will-change to reduce GPU usage on mobile */
-  [style*="will-change"] {
-    will-change: auto !important;
+  100% {
+    background-position: -200% 0;
   }
 }
 
-/* Optimize all sections */
-section {
-  contain: layout style;
+/* Print styles */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  img {
+    page-break-inside: avoid;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
 }

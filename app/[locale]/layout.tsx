@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { I18nProvider } from '@/lib/i18n';
 import { ScrollProvider } from '@/lib/scrollContext';
@@ -13,6 +13,15 @@ export const metadata: Metadata = {
     icon: '/favicon.png',
     apple: '/favicon.png',
   },
+  manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover',
+  themeColor: '#0066CC',
 };
 
 // Generate static params for supported locales
@@ -36,13 +45,19 @@ export default function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        {/* Optimize viewport for mobile */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
+        {/* DNS Prefetch & Preconnect for external resources */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         
-        {/* Theme color for mobile browsers */}
-        <meta name="theme-color" content="#0066CC" />
+        {/* PWA Meta Tags */}
+        <meta name="application-name" content="AGS" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="AGS" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
         
-        {/* Preload ONLY hero image - nothing else */}
+        {/* Preload critical hero images with fetchpriority */}
         <link
           rel="preload"
           as="image"
@@ -118,6 +133,28 @@ export default function LocaleLayout({
             content-visibility: auto;
           }
         `}} />
+        
+        {/* Service Worker Registration */}
+        <Script
+          id="sw-register"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(
+                    function(registration) {
+                      console.log('SW registered:', registration.scope);
+                    },
+                    function(err) {
+                      console.log('SW registration failed:', err);
+                    }
+                  );
+                });
+              }
+            `,
+          }}
+        />
       </head>
       <body>
         <ErrorBoundary>

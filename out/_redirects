@@ -17,5 +17,19 @@
 /es/about  /es/about.html  200
 /es/about/  /es/about.html  200
 
+# Coming soon pages (until implemented)
+/services  /#services  302
+/en/services  /#services  302
+/es/services  /es.html#services  302
+/request  /#contact  302
+/en/request  /#contact  302
+/es/request  /es.html#contact  302
+
+# Service Worker
+/sw.js  /sw.js  200
+
+# PWA Manifest
+/manifest.json  /manifest.json  200
+
 # Fallback to 404
 /*  /404.html  404

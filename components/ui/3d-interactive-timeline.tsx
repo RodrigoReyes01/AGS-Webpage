@@ -172,7 +172,7 @@ export const Timeline3D: React.FC<Timeline3DProps> = ({
       setLastScrollTop(st <= 0 ? 0 : st);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollTop]);
 
@@ -189,7 +189,7 @@ export const Timeline3D: React.FC<Timeline3DProps> = ({
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener('mousemove', handleMouseMove);
+      container.addEventListener('mousemove', handleMouseMove, { passive: true });
     }
 
     return () => {

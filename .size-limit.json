@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Main Bundle (English)",
+    "path": "out/_next/static/chunks/pages/index-*.js",
+    "limit": "150 KB",
+    "gzip": true
+  },
+  {
+    "name": "Main Bundle (Spanish)",
+    "path": "out/_next/static/chunks/pages/es-*.js",
+    "limit": "150 KB",
+    "gzip": true
+  },
+  {
+    "name": "About Page Bundle",
+    "path": "out/_next/static/chunks/pages/about-*.js",
+    "limit": "200 KB",
+    "gzip": true,
+    "ignore": ["framer-motion"]
+  },
+  {
+    "name": "Total JS",
+    "path": "out/_next/static/chunks/**/*.js",
+    "limit": "1 MB",
+    "gzip": true
+  }
+]
