@@ -83,6 +83,11 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 
   // Update locale and persist to localStorage
   const setLocale = (newLocale: Locale) => {
+    // Don't navigate if already on the requested locale
+    if (locale === newLocale) {
+      return;
+    }
+    
     // Always update the state immediately
     setLocaleState(newLocale);
     
