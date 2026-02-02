@@ -9,22 +9,11 @@ const WhyAGSSection: React.FC = () => {
   const { t, locale } = useTranslation();
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
-  // Get the base path with locale for static export
+  // Get the base path - no locale prefix needed anymore
   const getLocalePath = (path: string) => {
-    // For English home page, use root
-    if (locale === 'en' && path === '/') {
-      return '/';
-    }
-    // For other English pages, add .html extension for static export
-    if (locale === 'en' && path !== '/') {
-      return `/en${path}.html`;
-    }
-    // For Spanish home page
-    if (locale === 'es' && path === '/') {
-      return '/es.html';
-    }
-    // For other Spanish pages, add .html extension
-    return `/es${path}.html`;
+    // Simple paths - no locale prefix, no .html extension
+    // Just use the path as-is
+    return path;
   };
 
   useEffect(() => {
