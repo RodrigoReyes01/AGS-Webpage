@@ -9,6 +9,24 @@ const WhyAGSSection: React.FC = () => {
   const { t, locale } = useTranslation();
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
+  // Get the base path with locale for static export
+  const getLocalePath = (path: string) => {
+    // For English home page, use root
+    if (locale === 'en' && path === '/') {
+      return '/';
+    }
+    // For other English pages, add .html extension for static export
+    if (locale === 'en' && path !== '/') {
+      return `/en${path}.html`;
+    }
+    // For Spanish home page
+    if (locale === 'es' && path === '/') {
+      return '/es.html';
+    }
+    // For other Spanish pages, add .html extension
+    return `/es${path}.html`;
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -90,7 +108,7 @@ const WhyAGSSection: React.FC = () => {
           </p>
 
           {/* Read More Button */}
-          <Link href={`/${locale}/about`}>
+          <Link href={getLocalePath('/about')}>
             <button className="inline-flex items-center gap-2 px-4 py-2 border-2 border-white text-white text-sm font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
               {t('services.readMore')}
               <svg 
