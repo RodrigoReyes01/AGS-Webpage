@@ -42,7 +42,7 @@ export default function LocaleLayout({
         {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#0066CC" />
         
-        {/* Preload critical hero image - mobile first */}
+        {/* Preload ONLY hero image - nothing else */}
         <link
           rel="preload"
           as="image"
@@ -66,38 +66,6 @@ export default function LocaleLayout({
           media="(min-width: 1025px)"
           type="image/webp"
           fetchPriority="high"
-        />
-        
-        {/* Preload logo */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/logo-mobile.png"
-          media="(max-width: 768px)"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/images/logo.png"
-          media="(min-width: 769px)"
-          fetchPriority="high"
-        />
-        
-        {/* Preload first few section images for mobile */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/mobile/MissionVision.webp"
-          media="(max-width: 640px)"
-          type="image/webp"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/images/mobile/CargoServices.webp"
-          media="(max-width: 640px)"
-          type="image/webp"
         />
         
         {/* Inline critical CSS - Animations on desktop, disabled on mobile */}
@@ -150,29 +118,6 @@ export default function LocaleLayout({
             </ScrollProvider>
           </I18nProvider>
         </ErrorBoundary>
-        
-        {/* Load non-critical scripts after page load */}
-        <Script
-          id="performance-observer"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Monitor performance
-              if ('PerformanceObserver' in window) {
-                try {
-                  const observer = new PerformanceObserver((list) => {
-                    for (const entry of list.getEntries()) {
-                      if (entry.entryType === 'largest-contentful-paint') {
-                        console.log('LCP:', entry.startTime);
-                      }
-                    }
-                  });
-                  observer.observe({ entryTypes: ['largest-contentful-paint'] });
-                } catch (e) {}
-              }
-            `,
-          }}
-        />
       </body>
     </html>
   );
