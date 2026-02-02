@@ -78,31 +78,30 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
     setIsLoading(false);
   }, [locale]);
 
+  // Initialize locale from localStorage on mount (client-side only)
+  // This runs BEFORE the initialLocale sync, so it takes precedence
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedLocale = safeLocalStorage.getItem('preferredLanguage') as Locale;
+      if (savedLocale && (savedLocale === 'en' || savedLocale === 'es')) {
+        // Use saved locale from localStorage
+        if (savedLocale !== locale) {
+          setLocaleState(savedLocale);
+        }
+      }
+    }
+  }, []); // Run only once on mount
+
   // Sync locale with initialLocale prop (from URL) - only when initialLocale is provided and changes
   useEffect(() => {
     if (initialLocale !== undefined && initialLocale !== locale) {
-      setLocaleState(initialLocale);
-    }
-  }, [initialLocale, locale]);
-
-  // Initialize locale from localStorage on mount (client-side only)
-  // This is secondary to the URL-based locale
-  useEffect(() => {
-    if (typeof window !== 'undefined' && initialLocale !== undefined) {
+      // Only sync if there's no saved preference
       const savedLocale = safeLocalStorage.getItem('preferredLanguage') as Locale;
-      if (savedLocale && (savedLocale === 'en' || savedLocale === 'es')) {
-        // Only use saved locale if it matches the initial locale
-        // The URL is the source of truth
-        if (savedLocale !== initialLocale) {
-          // Update localStorage to match URL
-          safeLocalStorage.setItem('preferredLanguage', initialLocale);
-        }
-      } else {
-        // Save the initial locale to localStorage
-        safeLocalStorage.setItem('preferredLanguage', initialLocale);
+      if (!savedLocale) {
+        setLocaleState(initialLocale);
       }
     }
-  }, [initialLocale]);
+  }, [initialLocale, locale]);
 
   // Update locale and persist to localStorage
   const setLocale = (newLocale: Locale) => {
