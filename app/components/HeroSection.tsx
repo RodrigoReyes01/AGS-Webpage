@@ -1,10 +1,16 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import Button from '@/components/Button';
 import { useScroll } from '@/lib/scrollContext';
-import FloatingContactMenu from './FloatingContactMenu';
+
+// Lazy load FloatingContactMenu - not needed for initial render
+const FloatingContactMenu = dynamic(() => import('./FloatingContactMenu'), {
+  ssr: false,
+  loading: () => null,
+});
 
 /**
  * HeroSection component
