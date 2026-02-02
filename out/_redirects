@@ -1,0 +1,17 @@
+# Netlify redirects for static HTML routing
+
+# Root redirects to index.html
+/  /index.html  200
+
+# English routes
+/en  /en.html  200
+/en/  /en.html  200
+/en/about  /en/about.html  200
+
+# Spanish routes  
+/es  /es.html  200
+/es/  /es.html  200
+/es/about  /es/about.html  200
+
+# Fallback to 404
+/*  /404.html  404
