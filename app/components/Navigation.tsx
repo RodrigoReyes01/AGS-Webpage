@@ -41,12 +41,16 @@ const Navigation: React.FC = () => {
     if (locale === 'en' && path === '/') {
       return '/';
     }
-    // For other English pages, use /en/ prefix
+    // For other English pages, add .html extension for static export
     if (locale === 'en' && path !== '/') {
-      return `/en${path}`;
+      return `/en${path}.html`;
     }
-    // For Spanish, always use /es/ prefix
-    return `/${locale}${path === '/' ? '' : path}`;
+    // For Spanish home page
+    if (locale === 'es' && path === '/') {
+      return '/es.html';
+    }
+    // For other Spanish pages, add .html extension
+    return `/es${path}.html`;
   };
 
   // Helper function to check if a link is active
