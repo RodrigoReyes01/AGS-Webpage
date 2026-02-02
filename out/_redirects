@@ -3,7 +3,7 @@
 # Root redirects to index.html
 /  /index.html  200
 
-# English routes
+# English routes - redirect /en/ to /en.html
 /en  /en.html  200
 /en/  /en.html  200
 /en/about  /en/about.html  200

@@ -118,7 +118,7 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
         let newPath;
         if (newLocale === 'en') {
           if (currentPage === '/') {
-            newPath = '/'; // English home is at root
+            newPath = '/en.html'; // English home is at /en.html
           } else {
             newPath = `/en${currentPage}.html`; // English about is at /en/about.html
           }
