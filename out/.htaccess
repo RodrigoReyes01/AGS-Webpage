@@ -81,8 +81,9 @@ ErrorDocument 404 /404.html
   ExpiresByType font/ttf "access plus 1 year"
   ExpiresByType application/font-woff2 "access plus 1 year"
   
-  # HTML - short cache (5 minutes)
-  ExpiresByType text/html "access plus 300 seconds"
+  # HTML - NO CACHE - always revalidate to prevent stale bundle references
+  # This ensures HTML always matches the current JavaScript bundles
+  ExpiresByType text/html "access plus 0 seconds"
   
   # Service Worker - no cache
   <FilesMatch "sw\.js$">
@@ -96,14 +97,16 @@ ErrorDocument 404 /404.html
 
 # Alternative cache control using mod_headers if mod_expires is not available
 <IfModule mod_headers.c>
-  # Cache static assets for 1 year
+  # Cache static assets for 1 year (immutable - never changes)
   <FilesMatch "\.(jpg|jpeg|png|webp|gif|svg|ico|css|js|woff2|woff|ttf)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   
-  # Short cache for HTML
+  # HTML - NO CACHE - force revalidation on every request
+  # Critical: Prevents serving stale HTML with references to deleted JS bundles
   <FilesMatch "\.(html)$">
-    Header set Cache-Control "public, max-age=300, must-revalidate"
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+    Header set Pragma "no-cache"
   </FilesMatch>
   
   # No cache for service worker

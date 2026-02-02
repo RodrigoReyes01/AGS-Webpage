@@ -40,6 +40,12 @@ out/
 
 ## Deployment Steps
 
+### ⚠️ CRITICAL: Prevent Stale Bundle Issues
+
+**Problem**: If you don't delete old files before uploading, visitors may get cached HTML that references deleted JavaScript bundles, causing infinite loading.
+
+**Solution**: Always delete ALL files from `public_html` before uploading the new build.
+
 ### Step 1: Build the Site
 
 On your local machine:
@@ -55,11 +61,11 @@ ls -la out/
 cat out/.htaccess
 ```
 
-**Expected output**: `out/` folder with 72 files, including `.htaccess`
+**Expected output**: `out/` folder with files including `.htaccess`
 
 ### Step 2: Upload to cPanel
 
-#### Option A: Using cPanel File Manager (Recommended for beginners)
+#### Option A: Using cPanel File Manager (Recommended)
 
 1. **Login to cPanel**
    - Go to your hosting provider's cPanel URL
@@ -73,10 +79,12 @@ cat out/.htaccess
    - Click on `public_html` folder
    - This is your web root directory
 
-4. **Clear existing files (if any)**
-   - Select all files in `public_html`
-   - Click "Delete" (be careful!)
+4. **⚠️ CRITICAL: Delete ALL existing files**
+   - Click "Settings" (top right) → Check "Show Hidden Files (dotfiles)" → Save
+   - Select ALL files and folders in `public_html` (Ctrl+A or Cmd+A)
+   - Click "Delete"
    - Confirm deletion
+   - **Why**: This prevents old JavaScript bundles from conflicting with new HTML
 
 5. **Upload your site**
    - Click "Upload" button
@@ -85,11 +93,10 @@ cat out/.htaccess
    - Wait for upload to complete
 
 6. **Verify .htaccess**
-   - In File Manager, click "Settings" (top right)
-   - Check "Show Hidden Files (dotfiles)"
-   - Verify `.htaccess` is present in `public_html`
+   - In File Manager, verify `.htaccess` is present in `public_html`
+   - Open it and verify it contains the caching rules (HTML should have `max-age=0`)
 
-#### Option B: Using FTP/SFTP (Recommended for advanced users)
+#### Option B: Using FTP/SFTP
 
 1. **Connect via FTP client** (FileZilla, Cyberduck, etc.)
    - Host: Your domain or server IP
@@ -100,12 +107,17 @@ cat out/.htaccess
 2. **Navigate to public_html**
    - Remote directory: `/public_html/` or `/home/username/public_html/`
 
-3. **Upload all files**
+3. **⚠️ CRITICAL: Delete ALL existing files**
+   - Select all files and folders in remote `public_html`
+   - Delete them
+   - **Why**: Prevents stale bundle references
+
+4. **Upload all files**
    - Select all files from local `out/` folder
    - Drag to remote `public_html` folder
    - Ensure `.htaccess` is uploaded (enable "Show hidden files" in FTP client)
 
-4. **Set permissions** (if needed)
+5. **Set permissions** (if needed)
    - Files: 644
    - Folders: 755
    - `.htaccess`: 644
@@ -119,9 +131,9 @@ ssh username@yourdomain.com
 # Navigate to public_html
 cd public_html
 
-# Remove old files (be careful!)
+# ⚠️ CRITICAL: Remove ALL old files
 rm -rf *
-rm -rf .*
+rm -rf .*  # Remove hidden files too
 
 # Exit SSH
 exit
@@ -138,8 +150,17 @@ scp out/.htaccess username@yourdomain.com:~/public_html/
 1. **Check your domain**
    - Visit: `https://yourdomain.com`
    - Should load English home page
+   - **Hard refresh** (Ctrl+Shift+R or Cmd+Shift+R) to bypass browser cache
 
-2. **Test routing**
+2. **Verify HTML is not cached**
+   - Open DevTools (F12) → Network tab
+   - Refresh the page
+   - Click on the HTML file (e.g., `index.html` or just `/`)
+   - Check Response Headers:
+     - Should see: `Cache-Control: public, max-age=0, must-revalidate`
+     - **Why**: This ensures HTML is always fresh and matches current JS bundles
+
+3. **Test routing**
    - Visit: `https://yourdomain.com/about`
    - Should load English about page (not 404)
    
@@ -171,6 +192,27 @@ scp out/.htaccess username@yourdomain.com:~/public_html/
 ---
 
 ## Troubleshooting
+
+### Issue: Infinite loading / Skeleton screen stuck
+
+**Symptom**: New visitors see a loading skeleton that never completes. Browser console shows 404 errors for JavaScript bundles like:
+```
+GET https://yourdomain.com/_next/static/chunks/runtime-b7ef8a85c14fc302.js 404
+GET https://yourdomain.com/_next/static/chunks/main-app-6165e3b2368acfd9.js 404
+```
+
+**Root Cause**: Cached HTML references old JavaScript bundles that were deleted during deployment.
+
+**Solution**:
+1. **Delete ALL files** from `public_html` before uploading new build
+2. Verify `.htaccess` has `max-age=0` for HTML files
+3. Clear browser cache (Ctrl+Shift+R)
+4. If using Cloudflare or CDN, purge the cache
+
+**Prevention**:
+- Always follow the deployment steps exactly
+- Never upload files without deleting old ones first
+- HTML is now cached for 0 seconds, so this won't happen again
 
 ### Issue: 404 errors on page refresh
 
