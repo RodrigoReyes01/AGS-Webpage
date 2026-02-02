@@ -108,25 +108,22 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
       if (window.location && window.location.pathname) {
         const currentPath = window.location.pathname;
         
-        // Determine the current page (home or about)
-        let currentPage = '/';
-        if (currentPath.includes('about')) {
-          currentPage = '/about';
-        }
+        // Determine if we're on the about page
+        const isAboutPage = currentPath.includes('about');
         
         // Build the new path for static export
         let newPath;
         if (newLocale === 'en') {
-          if (currentPage === '/') {
-            newPath = '/'; // English home is at root (index.html)
+          if (isAboutPage) {
+            newPath = '/en/about.html'; // English about page
           } else {
-            newPath = `/en${currentPage}.html`; // English about is at /en/about.html
+            newPath = '/'; // English home is at root (index.html)
           }
         } else {
-          if (currentPage === '/') {
-            newPath = '/es.html'; // Spanish home is at /es.html
+          if (isAboutPage) {
+            newPath = '/es/about.html'; // Spanish about page
           } else {
-            newPath = `/es${currentPage}.html`; // Spanish about is at /es/about.html
+            newPath = '/es.html'; // Spanish home
           }
         }
         
