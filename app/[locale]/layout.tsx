@@ -26,9 +26,9 @@ export const viewport: Viewport = {
 
 // Generate static params for supported locales
 export async function generateStaticParams() {
+  // Only generate English pages - we'll handle language switching client-side
   return [
     { locale: 'en' },
-    { locale: 'es' },
   ];
 }
 

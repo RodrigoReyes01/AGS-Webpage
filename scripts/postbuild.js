@@ -18,9 +18,14 @@ const tasks = [
     dest: path.join(__dirname, '..', 'out', '.htaccess'),
   },
   {
-    name: 'English home page (index.html)',
+    name: 'Home page (index.html)',
     source: path.join(__dirname, '..', 'out', 'en.html'),
     dest: path.join(__dirname, '..', 'out', 'index.html'),
+  },
+  {
+    name: 'About page (about.html)',
+    source: path.join(__dirname, '..', 'out', 'en', 'about.html'),
+    dest: path.join(__dirname, '..', 'out', 'about.html'),
   },
 ];
 

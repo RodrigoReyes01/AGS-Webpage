@@ -1,5 +1,5 @@
 # .htaccess for AGS Webpage - Static Next.js Export
-# Handles routing for Apache/cPanel hosting
+# Simplified routing - Single page app with client-side language switching
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -8,56 +8,21 @@
   # ============================================
   # 1. Serve existing files and directories as-is
   # ============================================
-  # If the request is for an actual file or directory, serve it directly
-  # This ensures images, CSS, JS, fonts, and other assets load correctly
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
   # ============================================
-  # 2. Language root redirects
+  # 2. Service Worker and PWA files
   # ============================================
-  # Redirect /en and /en/ to English home (index.html)
-  # Use $ to match ONLY /en or /en/ (not /en/about)
-  RewriteRule ^en/?$ /index.html [L]
-  
-  # Redirect /es and /es/ to Spanish home (es.html)
-  # Use $ to match ONLY /es or /es/ (not /es/about)
-  RewriteRule ^es/?$ /es.html [L]
-
-  # ============================================
-  # 3. Service Worker and PWA files
-  # ============================================
-  # Ensure service worker is served with correct headers
   RewriteRule ^sw\.js$ /sw.js [L]
   RewriteRule ^manifest\.json$ /manifest.json [L]
 
   # ============================================
-  # 4. Coming soon routes (temporary redirects)
-  # ============================================
-  # Redirect /services to home page services section
-  RewriteRule ^services/?$ /#services [R=302,L]
-  RewriteRule ^en/services/?$ /#services [R=302,L]
-  RewriteRule ^es/services/?$ /es.html#services [R=302,L]
-  
-  # Redirect /request to home page contact section
-  RewriteRule ^request/?$ /#contact [R=302,L]
-  RewriteRule ^en/request/?$ /#contact [R=302,L]
-  RewriteRule ^es/request/?$ /es.html#contact [R=302,L]
-
-  # ============================================
-  # 5. Clean URL to .html mapping
+  # 3. Clean URL to .html mapping
   # ============================================
   # Map clean URLs to their .html equivalents
-  
-  # Specific rules for about pages (more specific rules first)
-  RewriteRule ^en/about/?$ /en/about.html [L]
-  RewriteRule ^es/about/?$ /es/about.html [L]
-  
-  # Generic rules for other pages
-  # Examples:
-  #   /about → /about.html
-  #   /en/contact → /en/contact.html
+  # /about → /about.html
   
   # Handle URLs with trailing slash
   RewriteRule ^(.+)/$ $1.html [L]

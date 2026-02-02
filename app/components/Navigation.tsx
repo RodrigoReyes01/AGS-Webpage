@@ -35,28 +35,16 @@ const Navigation: React.FC = () => {
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const firstFocusableElementRef = useRef<HTMLAnchorElement>(null);
 
-  // Get the base path with locale for static export
+  // Get the base path - no locale prefix needed anymore
   const getLocalePath = (path: string) => {
-    // For English home page, use root
-    if (locale === 'en' && path === '/') {
-      return '/';
-    }
-    // For other English pages, add .html extension for static export
-    if (locale === 'en' && path !== '/') {
-      return `/en${path}.html`;
-    }
-    // For Spanish home page
-    if (locale === 'es' && path === '/') {
-      return '/es.html';
-    }
-    // For other Spanish pages, add .html extension
-    return `/es${path}.html`;
+    // Simple paths - no locale prefix, no .html extension
+    // Just use the path as-is
+    return path;
   };
 
   // Helper function to check if a link is active
   const isActiveLink = (path: string) => {
-    // Remove locale prefix from pathname for comparison
-    const cleanPathname = pathname?.replace(/^\/(en|es)/, '') || '/';
+    const cleanPathname = pathname || '/';
     
     if (path === '/') {
       return cleanPathname === '/' || cleanPathname === '';
@@ -68,7 +56,7 @@ const Navigation: React.FC = () => {
   useEffect(() => {
     const checkBackground = () => {
       // Check if we're on the About page
-      const cleanPathname = pathname?.replace(/^\/(en|es)/, '') || '/';
+      const cleanPathname = pathname || '/';
       const isAboutPage = cleanPathname.startsWith('/about');
       
       if (isAboutPage) {

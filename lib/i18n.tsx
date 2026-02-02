@@ -106,51 +106,20 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 
   // Update locale and persist to localStorage
   const setLocale = (newLocale: Locale) => {
-    // Don't navigate if already on the requested locale
+    // Don't update if already on the requested locale
     if (locale === newLocale) {
       return;
     }
     
-    // Always update the state immediately
+    // Update the state immediately - this will trigger re-render with new translations
     setLocaleState(newLocale);
     
+    // Persist to localStorage for next visit
     if (typeof window !== 'undefined') {
       safeLocalStorage.setItem('preferredLanguage', newLocale);
-      
-      // In static export, navigate to the actual HTML files
-      if (window.location && window.location.pathname) {
-        const currentPath = window.location.pathname;
-        
-        // Remove .html extension and leading/trailing slashes for easier parsing
-        const cleanPath = currentPath.replace(/\.html$/, '').replace(/^\/|\/$/g, '');
-        
-        // Determine the page type (home or about)
-        // Check if path ends with 'about' or contains '/about'
-        const isAboutPage = cleanPath.endsWith('about') || cleanPath.includes('/about');
-        
-        // Build the new path for static export
-        // Use clean URLs (without .html) - Apache .htaccess will handle the rewrite
-        let newPath;
-        if (newLocale === 'en') {
-          if (isAboutPage) {
-            newPath = '/en/about'; // English about page (Apache serves /en/about.html)
-          } else {
-            newPath = '/'; // English home is at root (Apache serves index.html)
-          }
-        } else {
-          if (isAboutPage) {
-            newPath = '/es/about'; // Spanish about page (Apache serves /es/about.html)
-          } else {
-            newPath = '/es'; // Spanish home (Apache serves es.html)
-          }
-        }
-        
-        // Only navigate if we're in a real browser (not jsdom test environment)
-        if (window.location.href && !window.navigator.userAgent.includes('jsdom')) {
-          window.location.href = newPath;
-        }
-      }
     }
+    
+    // No navigation needed! Just update the state and React will re-render with new translations
   };
 
   /**
