@@ -104,12 +104,31 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
     if (typeof window !== 'undefined') {
       localStorage.setItem('preferredLanguage', newLocale);
       
-      // In a real browser environment with Next.js routing, navigate to the new locale
-      // In test environments, just update the state (which we already did above)
+      // In static export, navigate to the actual HTML files
       if (window.location && window.location.pathname) {
         const currentPath = window.location.pathname;
-        const pathWithoutLocale = currentPath.replace(/^\/(en|es)/, '');
-        const newPath = `/${newLocale}${pathWithoutLocale}`;
+        
+        // Determine the current page (home or about)
+        let currentPage = '/';
+        if (currentPath.includes('about')) {
+          currentPage = '/about';
+        }
+        
+        // Build the new path for static export
+        let newPath;
+        if (newLocale === 'en') {
+          if (currentPage === '/') {
+            newPath = '/'; // English home is at root
+          } else {
+            newPath = `/en${currentPage}.html`; // English about is at /en/about.html
+          }
+        } else {
+          if (currentPage === '/') {
+            newPath = '/es.html'; // Spanish home is at /es.html
+          } else {
+            newPath = `/es${currentPage}.html`; // Spanish about is at /es/about.html
+          }
+        }
         
         // Only navigate if we're in a real browser (not jsdom test environment)
         if (window.location.href && !window.navigator.userAgent.includes('jsdom')) {
