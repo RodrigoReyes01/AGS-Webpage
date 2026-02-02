@@ -1,5 +1,5 @@
 # .htaccess for AGS Webpage - Static Next.js Export
-# Simplified routing - Single page app with client-side language switching
+# Simplified routing - Directory-based URLs (no rewrites needed)
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -19,15 +19,16 @@
   RewriteRule ^manifest\.json$ /manifest.json [L]
 
   # ============================================
-  # 3. Clean URL to .html mapping
+  # 3. Fallback: Serve .html files for clean URLs (optional safety net)
   # ============================================
-  # Map clean URLs to their .html equivalents
-  # /about → /about.html
+  # This is now optional since we use directory structure with index.html
+  # But kept as a fallback for any other pages
   
-  # Handle URLs with trailing slash
-  RewriteRule ^(.+)/$ $1.html [L]
-  
-  # Handle URLs without trailing slash
+  # Only rewrite if the path doesn't already exist as a directory
+  RewriteCond %{REQUEST_FILENAME} !-d
+  # And the .html file exists
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  # Then serve the .html file
   RewriteRule ^(.+)$ $1.html [L]
 
 </IfModule>

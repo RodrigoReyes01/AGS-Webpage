@@ -2,7 +2,7 @@
 
 /**
  * Post-build script for AGS Webpage
- * Copies necessary files to the out/ directory after Next.js build
+ * Copies necessary files and restructures About pages for clean URLs
  */
 
 const fs = require('fs');
@@ -21,11 +21,6 @@ const tasks = [
     name: 'Home page (index.html)',
     source: path.join(__dirname, '..', 'out', 'en.html'),
     dest: path.join(__dirname, '..', 'out', 'index.html'),
-  },
-  {
-    name: 'About page (about.html)',
-    source: path.join(__dirname, '..', 'out', 'en', 'about.html'),
-    dest: path.join(__dirname, '..', 'out', 'about.html'),
   },
 ];
 
@@ -61,8 +56,81 @@ tasks.forEach((task) => {
   }
 });
 
+// Restructure About pages for clean URLs (no .htaccess rewrite needed)
+console.log('\n📁 Restructuring About pages for directory-based URLs...\n');
+
+// Only 'en' locale since we're using single-page app with client-side language switching
+const locales = ['en'];
+
+locales.forEach((locale) => {
+  try {
+    const prefix = locale ? `${locale}/` : '';
+    const srcFile = path.join(__dirname, '..', 'out', `${prefix}about.html`);
+    
+    if (fs.existsSync(srcFile)) {
+      // Create /about or /en/about directory
+      const destDir = path.join(__dirname, '..', 'out', `${prefix}about`);
+      
+      // Create directory if it doesn't exist
+      if (!fs.existsSync(destDir)) {
+        fs.mkdirSync(destDir, { recursive: true });
+      }
+      
+      // Copy about.html to about/index.html
+      const destFile = path.join(destDir, 'index.html');
+      fs.copyFileSync(srcFile, destFile);
+      
+      // Verify
+      if (fs.existsSync(destFile)) {
+        const stats = fs.statSync(destFile);
+        const sizeKB = (stats.size / 1024).toFixed(1);
+        console.log(`✅ Created /${prefix}about/index.html: ${sizeKB} KB`);
+        successCount++;
+        
+        // Keep the original about.html as fallback
+        console.log(`   (Kept original ${prefix}about.html as fallback)`);
+      } else {
+        console.log(`❌ Failed to create /${prefix}about/index.html`);
+        errorCount++;
+      }
+    } else {
+      console.log(`⚠️  Warning: ${prefix}about.html not found`);
+      errorCount++;
+    }
+  } catch (error) {
+    console.log(`❌ Error restructuring ${locale} About page: ${error.message}`);
+    errorCount++;
+  }
+});
+
+// Also create root /about directory (copy from en/about)
+try {
+  const srcFile = path.join(__dirname, '..', 'out', 'en', 'about.html');
+  
+  if (fs.existsSync(srcFile)) {
+    const destDir = path.join(__dirname, '..', 'out', 'about');
+    
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
+    }
+    
+    const destFile = path.join(destDir, 'index.html');
+    fs.copyFileSync(srcFile, destFile);
+    
+    if (fs.existsSync(destFile)) {
+      const stats = fs.statSync(destFile);
+      const sizeKB = (stats.size / 1024).toFixed(1);
+      console.log(`✅ Created /about/index.html: ${sizeKB} KB`);
+      successCount++;
+    }
+  }
+} catch (error) {
+  console.log(`❌ Error creating root /about: ${error.message}`);
+  errorCount++;
+}
+
 console.log('\n' + '='.repeat(50));
-console.log(`✅ Success: ${successCount}/${tasks.length} tasks completed`);
+console.log(`✅ Success: ${successCount} tasks completed`);
 
 if (errorCount > 0) {
   console.log(`⚠️  Warnings/Errors: ${errorCount}`);
@@ -77,3 +145,9 @@ if (errorCount > 0) {
 }
 
 console.log('🎉 Post-build tasks completed successfully!\n');
+console.log('📂 Directory structure:');
+console.log('   /index.html          → Home page');
+console.log('   /about/index.html    → About page (clean URL: /about)');
+console.log('   /en/about/index.html → English About (clean URL: /en/about)');
+console.log('   /.htaccess           → Apache configuration\n');
+
