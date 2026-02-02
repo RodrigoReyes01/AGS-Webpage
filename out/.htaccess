@@ -18,9 +18,11 @@
   # 2. Language root redirects
   # ============================================
   # Redirect /en and /en/ to English home (index.html)
+  # Use $ to match ONLY /en or /en/ (not /en/about)
   RewriteRule ^en/?$ /index.html [L]
   
   # Redirect /es and /es/ to Spanish home (es.html)
+  # Use $ to match ONLY /es or /es/ (not /es/about)
   RewriteRule ^es/?$ /es.html [L]
 
   # ============================================
@@ -47,10 +49,15 @@
   # 5. Clean URL to .html mapping
   # ============================================
   # Map clean URLs to their .html equivalents
+  
+  # Specific rules for about pages (more specific rules first)
+  RewriteRule ^en/about/?$ /en/about.html [L]
+  RewriteRule ^es/about/?$ /es/about.html [L]
+  
+  # Generic rules for other pages
   # Examples:
   #   /about → /about.html
-  #   /en/about → /en/about.html
-  #   /es/about → /es/about.html
+  #   /en/contact → /en/contact.html
   
   # Handle URLs with trailing slash
   RewriteRule ^(.+)/$ $1.html [L]
