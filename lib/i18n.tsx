@@ -40,27 +40,12 @@ interface I18nProviderProps {
  * Provides locale, translations, and translation function to all children
  */
 export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
-  // Determine the initial locale: prioritize initialLocale if provided, otherwise check localStorage
-  const determineInitialLocale = (): Locale => {
-    // If initialLocale is explicitly provided, use it (this is the URL-based locale in production)
-    if (initialLocale !== undefined) {
-      return initialLocale;
-    }
-    
-    // Otherwise, check localStorage (for test environments or when no URL locale is present)
-    if (typeof window !== 'undefined') {
-      const savedLocale = localStorage.getItem('preferredLanguage') as Locale;
-      if (savedLocale && (savedLocale === 'en' || savedLocale === 'es')) {
-        return savedLocale;
-      }
-    }
-    
-    // Default to English
-    return 'en';
-  };
-
-  const [locale, setLocaleState] = useState<Locale>(determineInitialLocale());
-  const [translations, setTranslations] = useState<Translations>(translationsMap[determineInitialLocale()]);
+  // Always use initialLocale for SSR/SSG to prevent hydration mismatch
+  // Default to 'en' if not provided
+  const initialLocaleValue = initialLocale || 'en';
+  
+  const [locale, setLocaleState] = useState<Locale>(initialLocaleValue);
+  const [translations, setTranslations] = useState<Translations>(translationsMap[initialLocaleValue]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Load translations when locale changes
@@ -72,10 +57,10 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 
   // Sync locale with initialLocale prop (from URL) - only when initialLocale is provided and changes
   useEffect(() => {
-    if (initialLocale !== undefined) {
+    if (initialLocale !== undefined && initialLocale !== locale) {
       setLocaleState(initialLocale);
     }
-  }, [initialLocale]);
+  }, [initialLocale, locale]);
 
   // Initialize locale from localStorage on mount (client-side only)
   // This is secondary to the URL-based locale
