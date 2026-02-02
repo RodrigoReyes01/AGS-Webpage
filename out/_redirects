@@ -5,11 +5,13 @@
 
 # English about page
 /en/about  /en/about.html  200
+/en/about/  /en/about.html  200
 
 # Spanish routes  
 /es  /es.html  200
 /es/  /es.html  200
 /es/about  /es/about.html  200
+/es/about/  /es/about.html  200
 
 # Fallback to 404
 /*  /404.html  404
