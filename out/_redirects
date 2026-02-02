@@ -3,6 +3,10 @@
 # Root is English home (index.html)
 /  /index.html  200
 
+# Redirect /en and /en/ to root (English home)
+/en  /  301
+/en/  /  301
+
 # English about page
 /en/about  /en/about.html  200
 /en/about/  /en/about.html  200
