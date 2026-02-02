@@ -1,5 +1,6 @@
 // API Response Caching with IndexedDB
 // Implements stale-while-revalidate pattern
+// Gracefully handles incognito/private browsing where IndexedDB may be unavailable
 
 const DB_NAME = 'ags-api-cache';
 const DB_VERSION = 1;
@@ -12,30 +13,49 @@ interface CachedResponse {
   timestamp: number;
 }
 
+// Check if IndexedDB is available (may be disabled in incognito mode)
+function isIndexedDBAvailable(): boolean {
+  try {
+    return typeof window !== 'undefined' && 'indexedDB' in window && window.indexedDB !== null;
+  } catch (error) {
+    console.warn('[API Cache] IndexedDB check failed:', error);
+    return false;
+  }
+}
+
 // Initialize IndexedDB
 function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
-    if (typeof window === 'undefined') {
-      reject(new Error('IndexedDB not available'));
+    if (!isIndexedDBAvailable()) {
+      reject(new Error('IndexedDB not available (private browsing?)'));
       return;
     }
 
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    try {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result);
 
-    request.onupgradeneeded = (event) => {
-      const db = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: 'url' });
-      }
-    };
+      request.onupgradeneeded = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME, { keyPath: 'url' });
+        }
+      };
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 
 // Get cached response
 async function getCached(url: string): Promise<any | null> {
+  if (!isIndexedDBAvailable()) {
+    console.info('[API Cache] IndexedDB not available, skipping cache read');
+    return null;
+  }
+
   try {
     const db = await openDB();
     const transaction = db.transaction(STORE_NAME, 'readonly');
@@ -54,13 +74,18 @@ async function getCached(url: string): Promise<any | null> {
       request.onerror = () => reject(request.error);
     });
   } catch (error) {
-    console.error('Error reading from cache:', error);
+    console.warn('[API Cache] Error reading from cache:', error);
     return null;
   }
 }
 
 // Set cached response
 async function setCached(url: string, data: any): Promise<void> {
+  if (!isIndexedDBAvailable()) {
+    console.info('[API Cache] IndexedDB not available, skipping cache write');
+    return;
+  }
+
   try {
     const db = await openDB();
     const transaction = db.transaction(STORE_NAME, 'readwrite');
@@ -78,7 +103,7 @@ async function setCached(url: string, data: any): Promise<void> {
       request.onerror = () => reject(request.error);
     });
   } catch (error) {
-    console.error('Error writing to cache:', error);
+    console.warn('[API Cache] Error writing to cache:', error);
   }
 }
 
@@ -118,6 +143,11 @@ export async function fetchWithCache<T = any>(
 
 // Clear expired cache entries
 export async function clearExpiredCache(): Promise<void> {
+  if (!isIndexedDBAvailable()) {
+    console.info('[API Cache] IndexedDB not available, skipping cache cleanup');
+    return;
+  }
+
   try {
     const db = await openDB();
     const transaction = db.transaction(STORE_NAME, 'readwrite');
@@ -135,18 +165,23 @@ export async function clearExpiredCache(): Promise<void> {
       }
     };
   } catch (error) {
-    console.error('Error clearing expired cache:', error);
+    console.warn('[API Cache] Error clearing expired cache:', error);
   }
 }
 
 // Clear all cache
 export async function clearAllCache(): Promise<void> {
+  if (!isIndexedDBAvailable()) {
+    console.info('[API Cache] IndexedDB not available, skipping cache clear');
+    return;
+  }
+
   try {
     const db = await openDB();
     const transaction = db.transaction(STORE_NAME, 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
     store.clear();
   } catch (error) {
-    console.error('Error clearing cache:', error);
+    console.warn('[API Cache] Error clearing cache:', error);
   }
 }

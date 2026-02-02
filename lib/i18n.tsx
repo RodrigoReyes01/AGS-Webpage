@@ -17,6 +17,29 @@ const translationsMap: Record<Locale, Translations> = {
   es: esTranslations,
 };
 
+// Safe localStorage wrapper for incognito/private browsing
+const safeLocalStorage = {
+  getItem: (key: string): string | null => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        return localStorage.getItem(key);
+      }
+    } catch (error) {
+      console.warn('[Storage] localStorage.getItem failed (private browsing?):', error);
+    }
+    return null;
+  },
+  setItem: (key: string, value: string): void => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem(key, value);
+      }
+    } catch (error) {
+      console.warn('[Storage] localStorage.setItem failed (private browsing?):', error);
+    }
+  },
+};
+
 // I18n Context type
 interface I18nContextType {
   locale: Locale;
@@ -66,17 +89,17 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
   // This is secondary to the URL-based locale
   useEffect(() => {
     if (typeof window !== 'undefined' && initialLocale !== undefined) {
-      const savedLocale = localStorage.getItem('preferredLanguage') as Locale;
+      const savedLocale = safeLocalStorage.getItem('preferredLanguage') as Locale;
       if (savedLocale && (savedLocale === 'en' || savedLocale === 'es')) {
         // Only use saved locale if it matches the initial locale
         // The URL is the source of truth
         if (savedLocale !== initialLocale) {
           // Update localStorage to match URL
-          localStorage.setItem('preferredLanguage', initialLocale);
+          safeLocalStorage.setItem('preferredLanguage', initialLocale);
         }
       } else {
         // Save the initial locale to localStorage
-        localStorage.setItem('preferredLanguage', initialLocale);
+        safeLocalStorage.setItem('preferredLanguage', initialLocale);
       }
     }
   }, [initialLocale]);
@@ -92,7 +115,7 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
     setLocaleState(newLocale);
     
     if (typeof window !== 'undefined') {
-      localStorage.setItem('preferredLanguage', newLocale);
+      safeLocalStorage.setItem('preferredLanguage', newLocale);
       
       // In static export, navigate to the actual HTML files
       if (window.location && window.location.pathname) {

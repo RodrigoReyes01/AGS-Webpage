@@ -140,18 +140,34 @@ export default function LocaleLayout({
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              if ('serviceWorker' in navigator) {
+              // Service Worker Registration with graceful fallback
+              // Works in normal browsing, fails gracefully in incognito/private mode
+              (function() {
+                // Check if service workers are supported and allowed
+                if (!('serviceWorker' in navigator)) {
+                  console.info('[SW] Service workers not supported in this browser');
+                  return;
+                }
+
+                // Don't block page load - register after load event
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').then(
-                    function(registration) {
-                      console.log('SW registered:', registration.scope);
-                    },
-                    function(err) {
-                      console.log('SW registration failed:', err);
-                    }
-                  );
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      console.log('[SW] Service worker registered successfully:', registration.scope);
+                      
+                      // Check for updates periodically
+                      setInterval(function() {
+                        registration.update().catch(function(err) {
+                          console.warn('[SW] Update check failed:', err);
+                        });
+                      }, 60 * 60 * 1000); // Check every hour
+                    })
+                    .catch(function(err) {
+                      // Service worker registration failed - this is OK in incognito mode
+                      console.info('[SW] Service worker registration failed (this is normal in private/incognito mode):', err.message);
+                    });
                 });
-              }
+              })();
             `,
           }}
         />

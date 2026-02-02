@@ -7,7 +7,11 @@ import Button from '@/components/Button';
 import { useScroll } from '@/lib/scrollContext';
 
 // Lazy load FloatingContactMenu - not needed for initial render
-const FloatingContactMenu = dynamic(() => import('./FloatingContactMenu'), {
+// Error handling ensures page works even if import fails
+const FloatingContactMenu = dynamic(() => import('./FloatingContactMenu').catch((err) => {
+  console.warn('[Dynamic Import] FloatingContactMenu failed to load:', err);
+  return { default: () => null };
+}), {
   ssr: false,
   loading: () => null,
 });
