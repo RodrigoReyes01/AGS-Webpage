@@ -53,7 +53,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) =
         `}
         aria-label="Switch to Spanish"
         aria-pressed={locale === 'es'}
-        title="Español"
+        title="Spanish"
       >
         🇪🇸
       </button>
